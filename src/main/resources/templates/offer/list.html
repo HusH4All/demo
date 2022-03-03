@@ -26,8 +26,15 @@
         <td th:text="${offer.description}"></td>
         <td th:text="${offer.startdate}"></td>
         <td th:text="${offer.enddate}"></td>
+        <td>
+            <a class="btn btn-warning" th:href="@{/prova/update/{nom}(nom=${prova.nom})}">Edit</a>
+        </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/prova/delete/{nom}(nom=${prova.nom})}">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>
+<a class="btn btn-success" href="add">Add new</a>
 </body>
 </html>
