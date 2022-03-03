@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Offers</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>List of current offers</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID Offer</th>
+        <th scope="col">Al</th>
+        <th scope="col">ID Skill</th>
+        <th scope="col">Description</th>
+        <th scope="col">StartDate</th>
+        <th scope="col">EndDate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="offer: ${offers}">
+        <td th:text="${offer.id_O}"></td>
+        <td th:text="${offer.id_al}"></td>
+        <td th:text="${offer.id_S}"></td>
+        <td th:text="${offer.description}"></td>
+        <td th:text="${offer.startdate}"></td>
+        <td th:text="${offer.enddate}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
