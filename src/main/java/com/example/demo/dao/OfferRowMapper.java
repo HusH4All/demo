@@ -18,5 +18,4 @@ public final class OfferRowMapper implements RowMapper<Offer> {
         offer.setEndDate(rs.getObject("EndDate", LocalDate.class));
         return offer;
     }
-
 }

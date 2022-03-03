@@ -33,6 +33,12 @@ public class OfferDao {
                 offer.getId_O()
         );
     }
+    public void deleteOffer(String id_O) {
+        jdbcTemplate.update(
+                "DELETE FROM Offer WHERE id_O = ?",
+                id_O
+        );
+    }
 
     public void updateOffer(Offer offer) {
         jdbcTemplate.update(
@@ -56,11 +62,11 @@ public class OfferDao {
 
     public List<Offer> getOffers() {
         try {
-            return jdbcTemplate.query("SELECT * FROM Offer",
+            return jdbcTemplate.query("SELECT * FROM offer",
                     new OfferRowMapper());
         }
         catch(EmptyResultDataAccessException e) {
-            return new ArrayList<>();
+            return new ArrayList<Offer>();
         }
     }
 }
