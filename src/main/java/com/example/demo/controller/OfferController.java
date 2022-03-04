@@ -35,12 +35,15 @@ public class OfferController {
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("offer") Offer offer, BindingResult bindingResult) {
+    public String processAddSubmit(
+            @ModelAttribute("offer") Offer offer,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "offer/add";
         offerDao.addOffer(offer);
         return "redirect:list";
     }
+
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
     public String editOffer(Model model, @PathVariable String id_O) {
         model.addAttribute("offer", offerDao.getOffer(id_O));

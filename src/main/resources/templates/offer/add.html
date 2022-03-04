@@ -1,44 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Crear nou nadador</title>
+    <title>Add Offer</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
 </head>
 <body>
+<div class="container">
 <h2>New Offer</h2>
-<form action="#" th:action="@{/offer/add}"
+<form class="form-horizontal" action="#" th:action="@{/offer/add}"
       th:object="${offer}" method="post">
-    <table>
-        <tr>
-            <td><label>ID Offer</label></td>
-            <td><input type="text" th:field="*{id_O}" /></td>
-        </tr>
-        <tr>
-            <td><label>Al</label></td>
-            <td><input type="text" th:field="*{id_al}" /></td>
-        </tr>
-        <tr>
-            <td><label>ID Skill</label></td>
-            <td><input type="text" th:field="*{id_S}" /></td>
-        </tr>
-        <tr>
-            <td><label>Description</label></td>
-            <td><input type="text" th:field="*{description}" /></td>
-        </tr>
-        <tr>
-            <td><label>Start Date</label></td>
-            <td><input type="text" th:field="*{StartDate}" /></td>
-        </tr>
-        <tr>
-            <td><label>End Date</label></td>
-            <td><input type="text" th:field="*{EndDate}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Add Offer" /></td>
-        </tr>
-    </table>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="ID Offer">ID Offer:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="ID Offer" th:field="*{id_O}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="Al">Al:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="Al" th:field="*{id_al}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="ID Skill">ID Skill:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="ID Skill" th:field="*{id_S}" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="Description">Description:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="Description" th:field="*{description}"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="Start Date">Start Date:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="Start Date" th:field="*{StartDate}"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" for="End Date">End Date:</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="End Date" th:field="*{EndDate}"/>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-primary">Add Offer</button>
+        </div>
+    </div>
+
 </form>
+</div>
 </body>
 </html>
