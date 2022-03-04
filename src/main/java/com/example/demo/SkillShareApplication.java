@@ -3,10 +3,12 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.logging.Logger;
 
 @SpringBootApplication
+
 public class SkillShareApplication {
 
 	private static final Logger log = Logger.getLogger(SkillShareApplication.class.getName());
