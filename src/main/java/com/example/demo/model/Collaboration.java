@@ -46,5 +46,6 @@ public class Collaboration {
                 ", EndDate=" + EndDate +
                 ", score=" + score +
                 '}';
+
     }
 }
