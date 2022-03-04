@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Collaboration</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Update Offer</h2>
+<form action="#" th:action="@{/Collaboration/update}"
+      th:object="${Collaboration}" method="post">
+    <table>
+        <tr>
+            <td><label>ID Offer</label></td>
+            <td><input type="text" th:field="*{id_C}" /></td>
+        </tr>
+        <tr>
+            <td><label>Al</label></td>
+            <td><input type="text" th:field="*{id_R}" /></td>
+        </tr>
+        <tr>
+            <td><label>ID Skill</label></td>
+            <td><input type="text" th:field="*{id_O}" /></td>
+        </tr>
+
+            <td><label>Start Date</label></td>
+            <td><input type="text" th:field="*{StartDate}" /></td>
+        </tr>
+        <tr>
+            <td><label>End Date</label></td>
+            <td><input type="text" th:field="*{EndDate}" /></td>
+        </tr>
+        <tr>
+            <td><label>Score</label></td>
+            <td><input type="text" th:field="*{score}" /></td>
+        </tr>
+        <tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Update Collaboration" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Collaborations</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>List of current collaborations</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID Collaboration</th>
+        <th scope="col">ID Request</th>
+        <th scope="col">ID Offer</th>
+        <th scope="col">StartDate</th>
+        <th scope="col">EndDate</th>
+        <th scope="col">Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="collaboration: ${collaborations}">
+        <td th:text="${collaboration.id_C}"></td>
+        <td th:text="${collaboration.id_R}"></td>
+        <td th:text="${collaboration.id_O}"></td>
+        <td th:text="${collaboration.StartDate}"></td>
+        <td th:text="${collaboration.EndDate}"></td>
+        <td th:text="${collaboration.score}"></td>
+        <td>
+            <a class="btn btn-warning" th:href="@{/collaboration/update/{id_O}(id_O=${collaboration.id_C})}">Edit</a>
+        </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/collaboration/delete/{id_O}(id_O=${collaboration.id_C})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add" class="btn btn-success" role="button">Add</a>
+</body>
+</html>
