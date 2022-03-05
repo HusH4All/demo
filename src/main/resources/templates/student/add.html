@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Student</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>New Student</h2>
+    <form class="form-horizontal" action="#" th:action="@{/student/add}"
+          th:object="${student}" method="post">
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="ID Al">ID Al:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="ID Al" th:field="*{id_al}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="Name">Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="Name" th:field="*{name}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="Password">Password:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="Password" th:field="*{password}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="Degree">Degree:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="Degree" th:field="*{degree}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="Course">Course:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="Course" th:field="*{course}"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="Hours">Hours:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="Hours" th:field="*{hours}"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" for="SKP">SKP:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="SKP" th:field="*{SKP}"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-primary">Add Student</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

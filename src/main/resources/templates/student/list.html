@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Students</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>List of current students</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID Al</th>
+        <th scope="col">Name</th>
+        <th scope="col">Password</th>
+        <th scope="col">Degree</th>
+        <th scope="col">Course</th>
+        <th scope="col">Hours</th>
+        <th scope="col">SKP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student: ${students}">
+        <td th:text="${student.id_al}"></td>
+        <td th:text="${request.name}"></td>
+        <td th:text="${request.password}"></td>
+        <td th:text="${request.degree}"></td>
+        <td th:text="${request.course}"></td>
+        <td th:text="${request.hours}"></td>
+        <td th:text="${student.SKP}"></td>
+        <td>
+            <a class="btn btn-warning" th:href="@{/student/update/{id_al}(id_al=${student.id_al})}">Edit</a>
+        </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/student/delete/{id_al}(id_al=${student.id_al})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add" class="btn btn-success" role="button">Add</a>
+</body>
+</html>

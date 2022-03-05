@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Student</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Update Student</h2>
+<form action="#" th:action="@{/student/update}"
+      th:object="${student}" method="post">
+    <table>
+        <tr>
+            <td><label>ID Al</label></td>
+            <td><input type="text" th:field="*{id_al}" /></td>
+        </tr>
+        <tr>
+            <td><label>Name</label></td>
+            <td><input type="text" th:field="*{name}" /></td>
+        </tr>
+        <tr>
+            <td><label>Password</label></td>
+            <td><input type="text" th:field="*{password}" /></td>
+        </tr>
+        <tr>
+            <td><label>Degree</label></td>
+            <td><input type="text" th:field="*{degree}" /></td>
+        </tr>
+        <tr>
+            <td><label>Course</label></td>
+            <td><input type="text" th:field="*{course}" /></td>
+        </tr>
+        <tr>
+            <td><label>Hours</label></td>
+            <td><input type="text" th:field="*{Hours}" /></td>
+        </tr>
+        <tr>
+            <td><label>SKP</label></td>
+            <td><input type="text" th:field="*{SKP}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Update Student" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Requests</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>List of current requests</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID Request</th>
+        <th scope="col">ID Al</th>
+        <th scope="col">ID Skill</th>
+        <th scope="col">Description</th>
+        <th scope="col">StartDate</th>
+        <th scope="col">EndDate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request: ${requests}">
+        <td th:text="${request.id_R}"></td>
+        <td th:text="${request.id_al}"></td>
+        <td th:text="${request.id_S}"></td>
+        <td th:text="${request.Description}"></td>
+        <td th:text="${request.StartDate}"></td>
+        <td th:text="${request.EndDate}"></td>
+        <td>
+            <a class="btn btn-warning" th:href="@{/request/update/{id_R}(id_R=${request.id_R})}">Edit</a>
+        </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/request/delete/{id_R}(id_R=${request.id_R})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add" class="btn btn-success" role="button">Add</a>
+</body>
+</html>
