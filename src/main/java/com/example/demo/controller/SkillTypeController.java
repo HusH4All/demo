@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/offer")
+@RequestMapping("/skilltype")
 public class SkillTypeController {
 
     private SkillTypeDao skillTypeDao;
@@ -24,13 +24,13 @@ public class SkillTypeController {
 
     @RequestMapping("/list")
     public String listSkillTypes(Model model) {
-        model.addAttribute("offers", skillTypeDao.getSkillTypes());
+        model.addAttribute("skilltypes", skillTypeDao.getSkillTypes());
         return "skilltype/list";
     }
 
     @RequestMapping(value="/add")
     public String addSkillType(Model model) {
-        model.addAttribute("offer", new SkillType());
+        model.addAttribute("skill", new SkillType());
         return "skilltype/add";
     }
 

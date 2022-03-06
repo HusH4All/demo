@@ -1,6 +1,6 @@
 package com.example.demo.enumerations;
 
-public enum CollaborationScore {
+public enum CollaborationState {
     OPEN,
     CLOSE
 }
