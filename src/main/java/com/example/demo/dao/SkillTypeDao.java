@@ -29,13 +29,13 @@ public class SkillTypeDao {
 
     public void deleteSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "DELETE FROM SkillType WHERE id_O = ?",
+                "DELETE FROM SkillType WHERE id_S = ?",
                 skill.getId_S()
         );
     }
     public void deleteSkilType(String id_S) {
         jdbcTemplate.update(
-                "DELETE FROM SkillType WHERE id_O = ?",
+                "DELETE FROM SkillType WHERE id_S = ?",
                 id_S
         );
     }

@@ -30,7 +30,7 @@ public class SkillTypeController {
 
     @RequestMapping(value="/add")
     public String addSkillType(Model model) {
-        model.addAttribute("skill", new SkillType());
+        model.addAttribute("skilltype", new SkillType());
         return "skilltype/add";
     }
 
