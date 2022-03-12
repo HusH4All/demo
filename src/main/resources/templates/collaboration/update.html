@@ -7,20 +7,20 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
 </head>
 <body>
-<h2>Update Offer</h2>
+<h2>Update Collaboration</h2>
 <form action="#" th:action="@{/Collaboration/update}"
       th:object="${Collaboration}" method="post">
     <table>
         <tr>
-            <td><label>ID Offer</label></td>
+            <td><label>ID Collaboration</label></td>
             <td><input type="text" th:field="*{id_C}" /></td>
         </tr>
         <tr>
-            <td><label>Al</label></td>
+            <td><label>ID Request</label></td>
             <td><input type="text" th:field="*{id_R}" /></td>
         </tr>
         <tr>
-            <td><label>ID Skill</label></td>
+            <td><label>ID Offer</label></td>
             <td><input type="text" th:field="*{id_O}" /></td>
         </tr>
 

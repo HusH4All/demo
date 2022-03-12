@@ -18,7 +18,7 @@ public class SkillTypeController {
     private SkillTypeDao skillTypeDao;
 
     @Autowired
-    public void setOfferDao(SkillTypeDao skillTypeDao) {
+    public void setSkillTypeDao(SkillTypeDao skillTypeDao) {
         this.skillTypeDao = skillTypeDao;
     }
 
@@ -37,7 +37,7 @@ public class SkillTypeController {
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("skilltype") SkillType skillType, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return "offer/add";
+            return "skilltype/add";
         skillTypeDao.addSkillType(skillType);
         return "redirect:list";
     }

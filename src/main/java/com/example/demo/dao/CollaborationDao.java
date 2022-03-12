@@ -22,7 +22,7 @@ public class CollaborationDao {
 
     public void addCollaboration(Collaboration collaboration) {
         jdbcTemplate.update(
-                "INSERT INTO Offer VALUES(?, ?, ?, ?, ?, ?)",
+                "INSERT INTO Collaboration VALUES(?, ?, ?, ?, ?, ?)",
                 collaboration.getId_C(), collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.getScore()
         );
     }
@@ -42,7 +42,7 @@ public class CollaborationDao {
 
     public void updateCollaboration(Collaboration collaboration) {
         jdbcTemplate.update(
-                "UPDATE Offer SET id_C = ?, id_R = ?, id_O = ?, StartDate = ?, EndDate = ? WHERE score = ?",
+                "UPDATE Collaboration SET id_C = ?, id_R = ?, id_O = ?, StartDate = ?, EndDate = ? WHERE score = ?",
                 collaboration.getId_C(), collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.getScore()
         );
     }

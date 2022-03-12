@@ -27,10 +27,10 @@
         <td th:text="${collaboration.EndDate}"></td>
         <td th:text="${collaboration.score}"></td>
         <td>
-            <a class="btn btn-warning" th:href="@{/collaboration/update/{id_O}(id_O=${collaboration.id_C})}">Edit</a>
+            <a class="btn btn-warning" th:href="@{/collaboration/update/{id_C}(id_C=${collaboration.id_C})}">Edit</a>
         </td>
         <td>
-            <a class="btn btn-danger" th:href="@{/collaboration/delete/{id_O}(id_O=${collaboration.id_C})}">Delete</a>
+            <a class="btn btn-danger" th:href="@{/collaboration/delete/{id_C}(id_C=${collaboration.id_C})}">Delete</a>
         </td>
     </tr>
     </tbody>
