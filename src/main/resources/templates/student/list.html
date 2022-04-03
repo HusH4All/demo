@@ -22,11 +22,11 @@
     <tbody>
     <tr th:each="student: ${students}">
         <td th:text="${student.id_al}"></td>
-        <td th:text="${request.name}"></td>
-        <td th:text="${request.password}"></td>
-        <td th:text="${request.degree}"></td>
-        <td th:text="${request.course}"></td>
-        <td th:text="${request.hours}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.password}"></td>
+        <td th:text="${student.degree}"></td>
+        <td th:text="${student.course}"></td>
+        <td th:text="${student.hours}"></td>
         <td th:text="${student.SKP}"></td>
         <td>
             <a class="btn btn-warning" th:href="@{/student/update/{id_al}(id_al=${student.id_al})}">Edit</a>

@@ -25,7 +25,7 @@ public class StudentController {
     @RequestMapping("/list")
     public String listStudents(Model model) {
         model.addAttribute("students", studentDao.getStudents());
-        return "request/list";
+        return "student/list";
     }
 
     @RequestMapping(value = "/add")
