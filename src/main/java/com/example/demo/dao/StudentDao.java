@@ -70,4 +70,13 @@ public class StudentDao {
             return new ArrayList<Student>();
         }
     }
+
+    public Student loadUserByUsername(String username, String password) {
+        Student student = getStudent(username.trim());
+        if (student == null)
+            return null;
+        if (password.equals(student.getPassword()))
+            return student;
+        else return null;
+    }
 }
