@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"/>
@@ -11,27 +10,33 @@
 </head>
 <div th:replace="fragments/header"></div>
 <body>
-<div layout:fragment="content">
-    <h2>Accés</h2>
-
-    <form action="#" th:action="@{/login}"
-          th:object="${student}" method="post">
-        <div class="form-group row">
-            <label for="exampleInputEmail1" class="form-label col-sm-1">Username:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Introduïu el nom d'usuari" style="width : 217px" th:field="*{id_al}">
-                <div class="text-danger" th:if="${#fields.hasErrors('id_al')}" th:errors="*{id_al}"></div>
+<div class="modal-dialog text-center">
+    <div class="col-sm-8 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="https://www.pngkey.com/png/full/208-2084656_third-party-icon-icon.png"/>
+            </div>
+            <form class="col-12" action="#" th:action="@{/login}"
+                  th:object="${student}" method="post">
+                <div class="form-group">
+                    <div class="col-sm-4" id="user-group">
+                        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Username" style="width : 217px" th:field="*{id_al}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('id_al')}" th:errors="*{id_al}"></div>
+                    </div>
+                </div>
+                <div class="form-group" id="pass-group">
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style="width : 217px" th:field="*{password}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>Log In</button>
+            </form>
+            <div class="col-12 forgot">
+                <a href="#">Remember password</a>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="exampleInputPassword1" class="form-label col-sm-1">Contrasenya:</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contrasenya" style="width : 217px" th:field="*{password}">
-                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-            </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Accedir" />
-    </form>
+    </div>
 </div>
 </body>
 </html>

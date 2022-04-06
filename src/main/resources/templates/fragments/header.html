@@ -24,8 +24,12 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="/student/list" th:href="@{/student/list}">Students</a>
                 </li>
-                <li>
-                    <a class="nav-link active" href="/login" th:href="@{/login}">LogIn</a>
+                <li class="loggeduser" th:object="${session}">
+                    <a th:if="*{student == null}" class="nav-link active" href="/login" th:href="@{/login}">LogIn</a>
+                    <a th:unless="*{student == null}" class="nav-link active" href="/logout" th:href="@{/logout}">LogOut</a>
+                </li>
+                <li class="loggeduser" th:object="${session}">
+                    <a th:if="*{student == null}" class="nav-link active" href="/signin" th:href="@{/signin}">SignIn</a>
                 </li>
             </ul>
         </div>

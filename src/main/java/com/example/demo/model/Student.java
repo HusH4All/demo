@@ -6,8 +6,9 @@ public class Student {
     private String password;
     private String degree;
     private Integer course;
-    private Integer hours;
-    private Integer SKP;
+    private Integer hours = 0;
+    private Boolean SKP = false;
+    private Boolean Active = true;
 
     public String getId_al() { return id_al; }
 
@@ -33,7 +34,11 @@ public class Student {
 
     public void setHours(Integer hours) { this.hours = hours; }
 
-    public Integer getSKP() { return SKP; }
+    public Boolean getSKP() { return SKP; }
 
-    public void setSKP(Integer SKP) { this.SKP = SKP; }
+    public void setSKP(Boolean SKP) { this.SKP = SKP; }
+
+    public Boolean getActive() { return Active; }
+
+    public void setActive(Boolean active) { Active = active; }
 }

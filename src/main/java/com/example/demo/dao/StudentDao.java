@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import com.example.demo.dao.StudentRowMapper;
 import com.example.demo.model.Student;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,8 +24,8 @@ public class StudentDao {
 
     public void addStudent(Student student) {
         jdbcTemplate.update(
-                "INSERT INTO Student VALUES(?, ?, ?, ?, ?, ?, ?)",
-                student.getId_al(), student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP()
+                "INSERT INTO Student VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+                student.getId_al(), student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive()
         );
     }
 
@@ -43,8 +44,8 @@ public class StudentDao {
 
     public void updateStudent(Student student) {
         jdbcTemplate.update(
-                "UPDATE Request SET name = ?, password = ?, degree = ?, course = ?, hours = ?, skp = ? WHERE id_al = ?",
-                student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getId_al()
+                "UPDATE Student SET name = ?, password = ?, degree = ?, course = ?, hours = ?, skp = ?, active =, WHERE id_al = ?",
+                student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive(), student.getId_al()
         );
     }
 
@@ -72,9 +73,14 @@ public class StudentDao {
     }
 
     public Student loadUserByUsername(String username, String password) {
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         Student student = getStudent(username.trim());
         if (student == null)
             return null;
+        if (passwordEncryptor.checkPassword(password, student.getPassword())) {
+            // Es deuria esborrar de manera segura el camp password abans de tornar-lo
+            return student;
+        }
         if (password.equals(student.getPassword()))
             return student;
         else return null;

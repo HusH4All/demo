@@ -1,11 +1,11 @@
 <div class="loggeduser" th:object="${session}">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"/>
-    <p th:if="*{user == null}">
+    <p th:if="*{student == null}">
         No autenticat <a href="/login" th:href="@{/login}">Entrar</a>
     </p>
-    <p th:unless="*{user == null}">
-        Autenticat com <span th:text="*{user.id_al}"></span> <a
+    <p th:unless="*{student == null}">
+        Autenticat com <span th:text="*{student.name}"></span> <a
             href="/logout" th:href="@{/logout}">Eixir</a>
     </p>
 </div>

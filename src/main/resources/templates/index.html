@@ -7,18 +7,13 @@
     <title>EI1027</title>
 </head>
 <div th:replace="fragments/header"></div>
-<body>
-<section class="mx-50 text-center pt-5">
-<ul class="btn-group-vertical">
-    <a href="collaboration/list" class="btn btn-lg btn-primary" role="button">Collaboration</a>
-    <a href="offer/list" class="btn btn-lg btn-primary" role="button">Offer</a>
-    <a href="request/list" class="btn btn-lg btn-primary" role="button">Request</a>
-    <a href="skilltype/list" class="btn btn-lg btn-primary" role="button">SkillType</a>
-    <a href="student/list" class="btn btn-lg btn-primary" role="button">Student</a>
-</ul>
-</section>
-<footer>
-    <p class="text-muted text-center">EI1027 - Disseny i Implementació de Sistemes d'Informació</p>
-</footer>
+<body th:object="${session}">
+    <section class="mx-50 text-center pt-5">
+        <h2>Welcome to SkillShare <span th:if="*{student != null}" th:text="*{student.name}"></span></h2>
+        <ul class="btn-group-horizontal">
+            <a href="offer/list" class="btn btn-lg btn-primary" role="button">View Offers</a>
+            <a href="request/list" class="btn btn-lg btn-primary" role="button">View Requests</a>
+        </ul>
+    </section>
 </body>
 </html>

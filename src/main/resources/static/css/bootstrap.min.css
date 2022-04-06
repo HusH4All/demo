@@ -72,7 +72,7 @@
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #444;
+  --bs-body-color: #fff;
   --bs-body-bg: #fff;
 }
 
@@ -96,9 +96,10 @@ body {
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: url(https://freefrontend.com/assets/img/css-background-patterns/simple-pattern-with-css3.png) no-repeat center center fixed;
+    background-size: cover;
 }
 
 hr {
@@ -11212,24 +11213,46 @@ fieldset:disabled .btn {
   color: #5c507c;
 }
 
-/*
-==================================Menu==============================================
-*/
+.backbody{
 
-#menu li > a {
-    font-size:15px;
-    font-family: 'Monserrat', sans-serif;
-    color:#fff;
 }
 
-#menu div > a {
-    font-size:20px;
-    color:#fff;
-    font-family: 'Monserrat', sans-serif;
-    font-weight:bold;
+.main-section{
+  margin:0 auto;
+  margin-top:25%;
+  padding: 0;
 }
 
-#menu form > button {
-    font-size:18px;
-    font-weight:bold;
+.modal-content{
+  opacity: .85;
+  padding: 0 20px;
+  box-shadow: 0px 0px 3px #848484;
+}
+
+.user-img{
+  margin-top: -50px;
+  margin-bottom: 35px;
+}
+
+.user-img img{
+  width: 100px;
+  height: 100px;
+}
+
+.form-group input{
+}
+
+.form-group input::before{
+}
+
+.form-group input#user-group::before{
+}
+
+.form-group input#password-group::before{
+}
+
+.background{
+  background: url(https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png) no-repeat center center fixed;
+  background-size: cover;
+}
 }

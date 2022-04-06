@@ -15,7 +15,7 @@ public final class StudentRowMapper implements RowMapper<Student> {
         student.setDegree(rs.getString("Degree"));
         student.setCourse(rs.getInt("Course"));
         student.setHours(rs.getInt("Hours"));
-        student.setSKP(rs.getInt("SKP"));
+        student.setSKP(rs.getBoolean("SKP"));
         return student;
     }
 }

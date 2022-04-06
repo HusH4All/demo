@@ -12,7 +12,6 @@
     <tr>
         <th scope="col">ID Al</th>
         <th scope="col">Name</th>
-        <th scope="col">Password</th>
         <th scope="col">Degree</th>
         <th scope="col">Course</th>
         <th scope="col">Hours</th>
@@ -23,7 +22,6 @@
     <tr th:each="student: ${students}">
         <td th:text="${student.id_al}"></td>
         <td th:text="${student.name}"></td>
-        <td th:text="${student.password}"></td>
         <td th:text="${student.degree}"></td>
         <td th:text="${student.course}"></td>
         <td th:text="${student.hours}"></td>

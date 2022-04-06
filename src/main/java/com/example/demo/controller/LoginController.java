@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.StudentDao;
 import com.example.demo.model.Student;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +59,29 @@ public class LoginController {
         session.setAttribute("student", student);
 
         if ( session.getAttribute("nextUrl") != null){
+            String redirect = (String) session.getAttribute("nextUrl");
+            session.removeAttribute("nextUrl");
+            return "redirect:" + redirect;
+        }
+
+        return "redirect:/";
+    }
+
+    @RequestMapping("signin")
+    public String signin(Model model){
+        model.addAttribute("student", new Student());
+        return "signin";
+    }
+
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public String checkSignin(@ModelAttribute("student") Student student, BindingResult bindingResult, HttpSession session){
+        session.setAttribute("student", student);
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+        String pass;
+        pass = passwordEncryptor.encryptPassword(student.getPassword());
+        student.setPassword(pass);
+        studentDao.addStudent(student);
+        if (session.getAttribute("nextUrl") != null){
             String redirect = (String) session.getAttribute("nextUrl");
             session.removeAttribute("nextUrl");
             return "redirect:" + redirect;

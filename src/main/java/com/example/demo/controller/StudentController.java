@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.StudentDao;
 import com.example.demo.model.Student;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class StudentController {
 
     @RequestMapping("/list")
     public String listStudents(HttpSession session, Model model) {
-        if (session.getAttribute("id_al") == null) {
+        if (session.getAttribute("student") == null) {
             model.addAttribute("student", new Student());
             session.setAttribute("nextUrl", "/student/list");
             return "login";
@@ -47,6 +48,10 @@ public class StudentController {
             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "student/add";
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+        String pass;
+        pass = passwordEncryptor.encryptPassword(student.getPassword());
+        student.setPassword(pass);
         studentDao.addStudent(student);
         return "redirect:list";
     }
