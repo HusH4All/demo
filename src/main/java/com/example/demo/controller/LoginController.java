@@ -24,7 +24,7 @@ class UserValidator implements Validator{
     public void validate(Object obj, Errors errors){
         Student student = (Student) obj;
         if (student.getId_al().trim().equals(""))
-            errors.rejectValue("username", "required", "Username is required");
+            errors.rejectValue("id_al", "required", "Username is required");
         if (student.getPassword().trim().equals(""))
             errors.rejectValue("password", "required", "Password is required");
     }
@@ -67,14 +67,20 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @RequestMapping("signin")
+    @RequestMapping("signup")
     public String signin(Model model){
         model.addAttribute("student", new Student());
-        return "signin";
+        return "signup";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String checkSignin(@ModelAttribute("student") Student student, BindingResult bindingResult, HttpSession session){
+        UserValidator userValidator = new UserValidator();
+        userValidator.validate(student, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
         session.setAttribute("student", student);
         BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         String pass;

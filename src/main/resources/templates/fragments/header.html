@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">SkillShare</a>
+        <img class="img-skill" src="https://mpng.subpng.com/20180420/wlw/kisspng-sigma-theta-tau-nurse-education-nursing-school-childhood-education-5ad9b9e7017f60.1670226215242183430062.jpg"/>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -25,11 +25,11 @@
                     <a class="nav-link active" href="/student/list" th:href="@{/student/list}">Students</a>
                 </li>
                 <li class="loggeduser" th:object="${session}">
-                    <a th:if="*{student == null}" class="nav-link active" href="/login" th:href="@{/login}">LogIn</a>
-                    <a th:unless="*{student == null}" class="nav-link active" href="/logout" th:href="@{/logout}">LogOut</a>
+                    <a th:if="*{student == null}" class="nav-link active" href="/login" th:href="@{/login}">Log In</a>
+                    <a th:unless="*{student == null}" class="nav-link active" href="/logout" th:href="@{/logout}">Log Out</a>
                 </li>
                 <li class="loggeduser" th:object="${session}">
-                    <a th:if="*{student == null}" class="nav-link active" href="/signin" th:href="@{/signin}">SignIn</a>
+                    <a th:if="*{student == null}" class="nav-link active" href="/signup" th:href="@{/signup}">Sign Up</a>
                 </li>
             </ul>
         </div>
