@@ -62,7 +62,7 @@ public class OfferDao {
 
     public List<Offer> getOffers() {
         try {
-            return jdbcTemplate.query("SELECT * FROM Offer",
+            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
                     new OfferRowMapper());
         }
         catch(EmptyResultDataAccessException e) {

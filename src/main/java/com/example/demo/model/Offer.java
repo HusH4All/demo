@@ -3,12 +3,12 @@ package com.example.demo.model;
 import java.time.LocalDate;
 
 public class Offer {
-    private String id_O;
-    private String id_al;
-    private String id_S;
-    private String description;
-    private java.time.LocalDate StartDate;
-    private java.time.LocalDate EndDate;
+    public String id_O;
+    public String id_al;
+    public String id_S;
+    public String description;
+    public java.time.LocalDate StartDate;
+    public java.time.LocalDate EndDate;
 
     public Offer(){}
 

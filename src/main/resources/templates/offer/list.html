@@ -1,40 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
     <title>Offers</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+        body{
+        margin-top:20px;
+        color: #593196;
+        text-align: left;
+        background-color: #593196;
+        }
+        .main-body {
+            padding: 15px;
+        }
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #593196;
+            background-clip: border-box;
+            border: 0 solid rgba(89,49,150,1);
+            border-radius: .25rem;
+
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 0rem;
+            background-color: #3b4652;
+            box-shadow: 0px 0px 20px #593196;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        .gutters-sm>.col, .gutters-sm>[class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+        .mb-3, .my-3 {
+            margin-bottom: 1rem!important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+        .h-100 {
+            height: 100%!important;
+        }
+        .shadow-none {
+            box-shadow: none!important;
+        }
+        .shadow-nice {
+            box-shadow: 0px 0px 50px #593196;
+        }
+        .btnpordios{
+            text-align: center;
+            font-size: 12px;
+            padding: 5px 40px!important;
+        }
+    </style>
 </head>
+<div th:replace="fragments/header"></div>
 <body>
-<h1>List of current offers</h1>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">ID Offer</th>
-        <th scope="col">Al</th>
-        <th scope="col">ID Skill</th>
-        <th scope="col">Description</th>
-        <th scope="col">StartDate</th>
-        <th scope="col">EndDate</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="offer: ${offers}">
-        <td th:text="${offer.id_O}"></td>
-        <td th:text="${offer.id_al}"></td>
-        <td th:text="${offer.id_S}"></td>
-        <td th:text="${offer.Description}"></td>
-        <td th:text="${offer.StartDate}"></td>
-        <td th:text="${offer.EndDate}"></td>
-        <td>
-            <a class="btn btn-warning" th:href="@{/offer/update/{id_O}(id_O=${offer.id_O})}">Edit</a>
-        </td>
-        <td>
-            <a class="btn btn-danger" th:href="@{/offer/delete/{id_O}(id_O=${offer.id_O})}">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="add" class="btn btn-success" role="button">Add</a>
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                <div class="md-5 mb-3">
+                    <div class="card shadow-nice">
+                        <div class="card-body">
+                            <table class="table table-stripped">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th scope="col">Skill</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                        <th scope="col">Collaborate</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table table-hover">
+                                    <tr class="table-light" th:each="offer: ${offers}">
+                                        <th th:text="${offer.id_S}"></th>
+                                        <td th:text="${offer.id_al}"></td>
+                                        <td th:text="${offer.description}"></td>
+                                        <td th:text="${offer.StartDate}"></td>
+                                        <td th:text="${offer.EndDate}"></td>
+                                        <td th:object="${session}">
+                                            <a th:if="*{student}!=null" href="collaboration/add" class="btn btn-outline-primary btnpordios" type="button" th:href="@{/collaboration/add/{id_o}(id_o=${offer.id_O})}">Join</a>
+                                            <a th:if="*{student}==null" class="btn btn-secondary disabled btnpordios">Join</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

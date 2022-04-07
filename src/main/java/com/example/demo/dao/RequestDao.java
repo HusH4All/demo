@@ -63,7 +63,7 @@ public class RequestDao {
 
     public List<Request> getRequests() {
         try {
-            return jdbcTemplate.query("SELECT * FROM Request",
+            return jdbcTemplate.query("SELECT r.id_r, st.name as id_al, sk.name as id_s, r.description, r.startdate, r.enddate FROM request as r JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
                     new RequestRowMapper());
         }
         catch(EmptyResultDataAccessException e) {
