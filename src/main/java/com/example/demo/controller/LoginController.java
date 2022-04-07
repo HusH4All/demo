@@ -56,6 +56,11 @@ public class LoginController {
             bindingResult.rejectValue("password", "bad pw", "Incorrect password");
             return "login";
         }
+
+        if(student.getBanned()){
+            bindingResult.rejectValue("id_al", "banned", "This user has been banned");
+            return "login";
+        }
         session.setAttribute("student", student);
 
         if ( session.getAttribute("nextUrl") != null){

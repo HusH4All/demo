@@ -65,17 +65,44 @@ public class StudentController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
-            @ModelAttribute("student") Student student,
+            @ModelAttribute("student") Student student, HttpSession session,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "student/update";
+        Student s = (Student) session.getAttribute("student");
+        student.setAll(s.getId_al(),s.getPassword(),s.getEmail(),s.getHours(),s.getSKP(),s.getActive(), s.getBanned());
         studentDao.updateStudent(student);
         return "redirect:profile";
     }
 
-    @RequestMapping(value = "/delete/{id_al}")
-    public String processDelete(@PathVariable String id_al) {
-        studentDao.deleteStudent(id_al);
-        return "redirect:../list";
+    @RequestMapping(value = "/disable/{id_al}")
+    public String processDisable(@PathVariable String id_al, HttpSession session) {
+        studentDao.disableStudent(id_al);
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/ban")
+    public String banStudent(Model model) {
+        model.addAttribute("students", studentDao.getBanneableStudents());
+        return "student/ban";
+    }
+
+    @RequestMapping(value = "/ban/{id_al}")
+    public String processBan(@PathVariable String id_al){
+        studentDao.banStudent(id_al);
+        return "redirect:/student/ban";
+    }
+
+    @RequestMapping(value = "/unban/{id_al}")
+    public String processUnBan(@PathVariable String id_al){
+        studentDao.unBanStudent(id_al);
+        return "redirect:/student/ban";
+    }
+
+    @RequestMapping(value = "/enable/{id_al}")
+    public String proccesEnable(@PathVariable String id_al){
+        studentDao.enableStudent(id_al);
+        return "redirect:/student/profile";
     }
 }

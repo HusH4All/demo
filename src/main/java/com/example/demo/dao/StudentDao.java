@@ -24,28 +24,43 @@ public class StudentDao {
 
     public void addStudent(Student student) {
         jdbcTemplate.update(
-                "INSERT INTO Student VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-                student.getId_al(), student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive()
+                "INSERT INTO Student VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                student.getId_al(), student.getName(), student.getPassword(), student.getEmail(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive(), student.getBanned()
         );
     }
 
-    public void deleteStudent(Student student) {
+    public void disableStudent(String id_al) {
         jdbcTemplate.update(
-                "DELETE FROM Student WHERE id_al = ?",
-                student.getId_al()
+                "UPDATE Student SET active = ? WHERE id_al = ?",
+                false, id_al
         );
     }
-    public void deleteStudent(String id_al) {
+
+    public void enableStudent(String id_al) {
         jdbcTemplate.update(
-                "DELETE FROM Student WHERE id_al = ?",
-                id_al
+                "UPDATE Student SET active = ? WHERE id_al = ?",
+                true, id_al
+        );
+    }
+
+    public void banStudent(String id_al) {
+        jdbcTemplate.update(
+                "UPDATE Student SET banned = ? WHERE id_al = ?",
+                true, id_al
+        );
+    }
+
+    public void unBanStudent(String id_al) {
+        jdbcTemplate.update(
+                "UPDATE Student SET banned = ? WHERE id_al = ?",
+                false, id_al
         );
     }
 
     public void updateStudent(Student student) {
         jdbcTemplate.update(
-                "UPDATE Student SET name = ?, password = ?, degree = ?, course = ?, hours = ?, skp = ?, active =? WHERE id_al = ?",
-                student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive(), student.getId_al()
+                "UPDATE Student SET name = ?, degree = ?, course = ? WHERE id_al = ?",
+                student.getName(), student.getDegree(), student.getCourse(), student.getId_al()
         );
     }
 
@@ -65,6 +80,16 @@ public class StudentDao {
     public List<Student> getStudents() {
         try {
             return jdbcTemplate.query("SELECT * FROM Student",
+                    new StudentRowMapper());
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Student>();
+        }
+    }
+
+    public List<Student> getBanneableStudents() {
+        try {
+            return jdbcTemplate.query("SELECT * FROM Student WHERE SKP = 'false'",
                     new StudentRowMapper());
         }
         catch(EmptyResultDataAccessException e) {

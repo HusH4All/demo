@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <title>Students</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+        body{
+        margin-top:20px;
+        color: #1a202c;
+        text-align: left;
+        background-color: #e2e8f0;
+        }
+        .main-body {
+            padding: 15px;
+        }
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #593196;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+            background-color: #3b4652;
+            box-shadow: 0px 0px 20px #593196;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        .gutters-sm>.col, .gutters-sm>[class*=col-] {
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+        .mb-3, .my-3 {
+            margin-bottom: 1rem!important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+        .h-100 {
+            height: 100%!important;
+        }
+        .shadow-none {
+            box-shadow: none!important;
+        }
+        .shadow-nice {
+              box-shadow: 0px 0px 25px #593196;
+        }
+    </style>
+</head>
+<div th:replace="fragments/header"></div>
+    <body>
+    <div class="container">
+        <div class="main-body">
+            <div class="row gutters-sm">
+                        <div class="card-body">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID Al</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Degree</th>
+                                        <th scope="col">Course</th>
+                                        <th scope="col">Hours</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-active" th:each="student: ${students}">
+                                        <td th:text="${student.id_al}"></td>
+                                        <td th:text="${student.name}"></td>
+                                        <td th:text="${student.degree}"></td>
+                                        <td th:text="${student.course}"></td>
+                                        <td th:text="${student.hours}"></td>
+                                        <td>
+                                            <a th:if="*{student.banned}" class="btn btn-success" th:href="@{/student/unban/{id_al}(id_al=${student.id_al})}">Unban</a>
+                                            <a th:unless="*{student.banned}" class="btn btn-danger" th:href="@{/student/ban/{id_al}(id_al=${student.id_al})}">Ban</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

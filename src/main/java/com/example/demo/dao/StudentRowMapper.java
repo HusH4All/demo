@@ -12,10 +12,13 @@ public final class StudentRowMapper implements RowMapper<Student> {
         student.setId_al(rs.getString("id_al"));
         student.setName(rs.getString("Name"));
         student.setPassword(rs.getString("Password"));
+        student.setEmail(rs.getString("Email"));
         student.setDegree(rs.getString("Degree"));
         student.setCourse(rs.getInt("Course"));
         student.setHours(rs.getInt("Hours"));
         student.setSKP(rs.getBoolean("SKP"));
+        student.setActive(rs.getBoolean("active"));
+        student.setBanned(rs.getBoolean("banned"));
         return student;
     }
 }
