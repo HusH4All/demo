@@ -4236,6 +4236,7 @@ fieldset:disabled .btn {
   justify-content: space-between;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
+  box-shadow: 0px 0px 2rem #593196;
 }
 
 .navbar > .container,
@@ -11246,9 +11247,7 @@ fieldset:disabled .btn {
 .form-group input{
     height: 42px;
     font-size: 18px;
-    border:0;
     padding-left: 54px;
-    border-radius: 5px;
 }
 
 .form-group::before{
@@ -11264,12 +11263,22 @@ fieldset:disabled .btn {
     color: #3b4652;
 }
 
+.form-group#usererror-group::before{
+    content: "\f007";
+    color: #3b4652;
+}
+
 .form-group#name-group::before{
     content: "\f2bb";
     color: #3b4652;
 }
 
 .form-group#pass-group::before{
+    content: "\f023";
+    color: #3b4652;
+}
+
+.form-group#passerror-group::before{
     content: "\f023";
     color: #3b4652;
 }
@@ -11290,8 +11299,8 @@ fieldset:disabled .btn {
 }
 
 .img-skill{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   box-shadow: 0px 0px 15px #fff;
   border-radius: 70%;
   margin-right: 15px;

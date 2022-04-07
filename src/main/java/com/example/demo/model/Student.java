@@ -4,6 +4,7 @@ public class Student {
     private String id_al;
     private String name;
     private String password;
+    private String email;
     private String degree;
     private Integer course;
     private Integer hours = 0;
@@ -12,7 +13,11 @@ public class Student {
 
     public String getId_al() { return id_al; }
 
-    public void setId_al(String id_al) { this.id_al = id_al; }
+    public void setId_al(String id_al) {
+        this.id_al = id_al;
+        String e = id_al+"@uji.es";
+        this.email = e.replace(" ","");
+    }
 
     public String getName() { return name; }
 
@@ -41,4 +46,6 @@ public class Student {
     public Boolean getActive() { return Active; }
 
     public void setActive(Boolean active) { Active = active; }
+
+    public String getEmail() {return email;}
 }

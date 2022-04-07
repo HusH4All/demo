@@ -44,7 +44,7 @@ public class StudentDao {
 
     public void updateStudent(Student student) {
         jdbcTemplate.update(
-                "UPDATE Student SET name = ?, password = ?, degree = ?, course = ?, hours = ?, skp = ?, active =, WHERE id_al = ?",
+                "UPDATE Student SET name = ?, password = ?, degree = ?, course = ?, hours = ?, skp = ?, active =? WHERE id_al = ?",
                 student.getName(), student.getPassword(), student.getDegree(), student.getCourse(), student.getHours(), student.getSKP(), student.getActive(), student.getId_al()
         );
     }

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
     <title>Students</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 </head>
+<div th:replace="fragments/header"></div>
 <body>
 <h1>List of current students</h1>
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
     <tr>
         <th scope="col">ID Al</th>
@@ -19,7 +22,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="student: ${students}">
+    <tr class="table-active" th:each="student: ${students}">
         <td th:text="${student.id_al}"></td>
         <td th:text="${student.name}"></td>
         <td th:text="${student.degree}"></td>

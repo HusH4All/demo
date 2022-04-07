@@ -25,15 +25,16 @@ public class StudentController {
         this.studentDao = studentDao;
     }
 
-    @RequestMapping("/list")
-    public String listStudents(HttpSession session, Model model) {
+    @RequestMapping("/profile")
+    public String profile(HttpSession session, Model model) {
         if (session.getAttribute("student") == null) {
             model.addAttribute("student", new Student());
-            session.setAttribute("nextUrl", "/student/list");
+            session.setAttribute("nextUrl", "/student/profile");
             return "login";
         }
-        model.addAttribute("students", studentDao.getStudents());
-        return "student/list";
+        Student student = (Student) session.getAttribute("student");
+        model.addAttribute("student", studentDao.getStudent(student.getId_al()));
+        return "student/profile";
     }
 
     @RequestMapping(value = "/add")
@@ -69,7 +70,7 @@ public class StudentController {
         if (bindingResult.hasErrors())
             return "student/update";
         studentDao.updateStudent(student);
-        return "redirect:list";
+        return "redirect:profile";
     }
 
     @RequestMapping(value = "/delete/{id_al}")

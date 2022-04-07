@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    />
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"/>
 </head>
@@ -22,14 +21,14 @@
                     <a class="nav-link active" href="/" th:href="@{/}">Home <span class="visually-hidden">(current)</span> </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/student/list" th:href="@{/student/list}">Students</a>
+                    <a class="nav-link" href="/student/profile" th:href="@{/student/profile}">Profile</a>
                 </li>
                 <li class="loggeduser" th:object="${session}">
-                    <a th:if="*{student == null}" class="nav-link active" href="/login" th:href="@{/login}">Log In</a>
-                    <a th:unless="*{student == null}" class="nav-link active" href="/logout" th:href="@{/logout}">Log Out</a>
+                    <a th:if="*{student == null}" class="nav-link" href="/login" th:href="@{/login}">Log In</a>
+                    <a th:unless="*{student == null}" class="nav-link" href="/logout" th:href="@{/logout}">Log Out</a>
                 </li>
                 <li class="loggeduser" th:object="${session}">
-                    <a th:if="*{student == null}" class="nav-link active" href="/signup" th:href="@{/signup}">Sign Up</a>
+                    <a th:if="*{student == null}" class="nav-link" href="/signup" th:href="@{/signup}">Sign Up</a>
                 </li>
             </ul>
         </div>
