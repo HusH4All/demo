@@ -4818,6 +4818,7 @@ fieldset:disabled .btn {
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
+
 }
 
 .card > hr {
@@ -11290,6 +11291,16 @@ fieldset:disabled .btn {
 
 .form-group#course-group::before{
     content: "\f02d";
+    color: #3b4652;
+}
+
+.form-group#desc-group::before{
+    content: "\f27a";
+    color: #3b4652;
+}
+
+.form-group#times-group::before, .form-group#timee-group::before{
+    content: "\f017";
     color: #3b4652;
 }
 

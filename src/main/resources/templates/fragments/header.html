@@ -23,6 +23,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/student/profile" th:href="@{/student/profile}">Profile</a>
                 </li>
+                <li class="nav-item dropdown" th:object="${session}">
+                    <a th:unless="*{student == null}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Offers</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/offer/list">My Offers</a>
+                        <a class="dropdown-item" href="/offer/add">Add Offer</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav d-flex">
                 <li class="loggeduser" th:object="${session}">
                     <a th:if="*{student == null}" class="nav-link" href="/login" th:href="@{/login}">Log In</a>
                     <a th:unless="*{student == null}" class="nav-link" href="/logout" th:href="@{/logout}">Log Out</a>

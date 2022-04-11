@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.example.demo.enumerations.SkillLevel;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Offer {
@@ -7,8 +10,10 @@ public class Offer {
     public String id_al;
     public String id_S;
     public String description;
-    public java.time.LocalDate StartDate;
-    public java.time.LocalDate EndDate;
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
+    public LocalDate StartDate;
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
+    public LocalDate EndDate;
 
     public Offer(){}
 
@@ -32,9 +37,9 @@ public class Offer {
 
     public void setDescription(String description) {this.description = description;}
 
-    public void setStartDate(LocalDate startDate) {StartDate = startDate;}
+    public void setStartDate(LocalDate startDate) {this.StartDate = startDate;}
 
-    public void setEndDate(LocalDate endDate) {EndDate = endDate;}
+    public void setEndDate(LocalDate endDate) {this.EndDate = endDate;}
 
     @Override
     public String toString() {

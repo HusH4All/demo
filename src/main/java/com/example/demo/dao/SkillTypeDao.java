@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.model.Offer;
 import com.example.demo.model.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

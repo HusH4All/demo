@@ -9,6 +9,7 @@
 <div th:replace="fragments/header"></div>
 <body th:object="${session}">
     <section class="mx-50 text-center pt-5">
+        <img width="300px" height="300px" src="../photos/logo.png">
         <h2>Welcome to SkillShare <span th:if="*{student != null}" th:text="*{student.name}"></span></h2>
         <ul class="btn-group-horizontal">
             <a href="offer/list" class="btn btn-lg btn-primary" role="button">View Offers</a>

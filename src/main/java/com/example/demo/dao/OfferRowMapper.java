@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.enumerations.SkillLevel;
 import com.example.demo.model.Offer;
 import org.springframework.jdbc.core.RowMapper;
 

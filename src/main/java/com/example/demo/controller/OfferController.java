@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.OfferDao;
+import com.example.demo.dao.SkillTypeDao;
 import com.example.demo.model.Offer;
+import com.example.demo.model.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/offer")
 public class OfferController {
 
     private OfferDao offerDao;
+    private SkillTypeDao skillTypeDao;
 
     @Autowired
     public void setOfferDao(OfferDao offerDao) {
@@ -24,7 +32,10 @@ public class OfferController {
 
     @RequestMapping("/list")
     public String listOffers(Model model) {
-        model.addAttribute("offers", offerDao.getOffers());
+        Map<Offer, SkillType> offerSkillTypeMap = new HashMap<>();
+        for (Offer offer : offerDao.getOffers()) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+
+        model.addAttribute("offers", offerSkillTypeMap);
         return "offer/list";
     }
 

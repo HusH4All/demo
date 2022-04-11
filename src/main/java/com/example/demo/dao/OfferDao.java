@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Offer;
+import com.example.demo.model.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -62,11 +63,24 @@ public class OfferDao {
 
     public List<Offer> getOffers() {
         try {
-            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
+            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
                     new OfferRowMapper());
         }
         catch(EmptyResultDataAccessException e) {
             return new ArrayList<Offer>();
+        }
+    }
+
+    public SkillType getSkill(String id_S){
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM SkillType WHERE id_S = ?",
+                    new SkillTypeRowMapper(),
+                    id_S
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
         }
     }
 }
