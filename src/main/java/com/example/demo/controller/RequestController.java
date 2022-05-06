@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.RequestDao;
+import com.example.demo.model.Offer;
 import com.example.demo.model.Request;
+import com.example.demo.model.SkillType;
+import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/request")
@@ -23,8 +30,23 @@ public class RequestController {
     }
 
     @RequestMapping("/list")
-    public String listRequests(Model model) {
-        model.addAttribute("requests", requestDao.getRequests());
+    public String listRequests(HttpSession session, Model model) {
+        Map<Request, SkillType> requestSkillTypeMap = new HashMap<>();
+        if (session.getAttribute("student") == null) {
+            for (Request request : requestDao.getRequests(null)) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+        }
+        else for (Request request : requestDao.getRequests((Student) session.getAttribute("student"))) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+
+        model.addAttribute("requests", requestSkillTypeMap);
+        return "request/list";
+    }
+
+    @RequestMapping("/myrequests")
+    public String listMyRequests(HttpSession session, Model model) {
+        Map<Request, SkillType> requestSkillTypeMap = new HashMap<>();
+        for (Request request : requestDao.getMyRequests((Student) session.getAttribute("student"))) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+
+        model.addAttribute("requests", requestSkillTypeMap);
         return "request/list";
     }
 

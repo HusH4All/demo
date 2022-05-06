@@ -26,8 +26,15 @@
                 <li class="nav-item dropdown" th:object="${session}">
                     <a th:unless="*{student == null}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Offers</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/offer/list">My Offers</a>
+                        <a class="dropdown-item" href="/offer/myoffers">My Offers</a>
                         <a class="dropdown-item" href="/offer/add">Add Offer</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" th:object="${session}">
+                    <a th:unless="*{student == null}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Requests</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/request/myrequests">My Requests</a>
+                        <a class="dropdown-item" href="/request/add">Add Request</a>
                     </div>
                 </li>
             </ul>

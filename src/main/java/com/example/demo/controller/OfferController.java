@@ -4,6 +4,7 @@ import com.example.demo.dao.OfferDao;
 import com.example.demo.dao.SkillTypeDao;
 import com.example.demo.model.Offer;
 import com.example.demo.model.SkillType;
+import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,9 +33,21 @@ public class OfferController {
     }
 
     @RequestMapping("/list")
-    public String listOffers(Model model) {
+    public String listOffers(HttpSession session, Model model) {
         Map<Offer, SkillType> offerSkillTypeMap = new HashMap<>();
-        for (Offer offer : offerDao.getOffers()) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+        if (session.getAttribute("student") == null) {
+            for (Offer offer : offerDao.getOffers(null)) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+        }
+        else for (Offer offer : offerDao.getOffers((Student) session.getAttribute("student"))) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+
+        model.addAttribute("offers", offerSkillTypeMap);
+        return "offer/list";
+    }
+
+    @RequestMapping("/myoffers")
+    public String listMyOffers(HttpSession session, Model model) {
+        Map<Offer, SkillType> offerSkillTypeMap = new HashMap<>();
+        for (Offer offer : offerDao.getMyOffers((Student) session.getAttribute("student"))) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
 
         model.addAttribute("offers", offerSkillTypeMap);
         return "offer/list";

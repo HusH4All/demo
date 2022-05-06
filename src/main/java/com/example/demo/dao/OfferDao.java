@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import com.example.demo.model.Offer;
 import com.example.demo.model.SkillType;
+import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,10 +62,34 @@ public class OfferDao {
         }
     }
 
-    public List<Offer> getOffers() {
+    public List<Offer> getOffers(Student student) {
+        if (student == null) {
+            try {
+                return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
+                        new OfferRowMapper());
+            }
+            catch(EmptyResultDataAccessException e) {
+                return new ArrayList<Offer>();
+            }
+        }
+        else {
+            try {
+                return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al != ?;",
+                        new OfferRowMapper(),
+                        student.getId_al()
+                );
+            } catch (EmptyResultDataAccessException e) {
+                return new ArrayList<Offer>();
+            }
+        }
+    }
+
+    public List<Offer> getMyOffers(Student student) {
         try {
-            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
-                    new OfferRowMapper());
+            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al = ?;",
+                    new OfferRowMapper(),
+                    student.getId_al()
+            );
         }
         catch(EmptyResultDataAccessException e) {
             return new ArrayList<Offer>();
