@@ -6,6 +6,7 @@ import com.example.demo.model.Offer;
 import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,7 @@ public class OfferController {
         return "offer/list";
     }
 
+
     @RequestMapping(value="/add")
     public String addOffer(Model model) {
         model.addAttribute("offer", new Offer());
@@ -62,10 +64,13 @@ public class OfferController {
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(
             @ModelAttribute("offer") Offer offer,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors())
             return "offer/add";
-        offerDao.addOffer(offer);
+        String id =  offerDao.lastOffer().id_O;
+        int num_id = Integer.parseInt(id)+1;
+        id = String.valueOf(num_id);
+        offerDao.addOffer(offer, id, (Student) session.getAttribute("student"));
         return "redirect:list";
     }
 
