@@ -67,11 +67,7 @@ public class OfferController {
             BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors())
             return "offer/add";
-        String id =  offerDao.lastOffer().id_O;
-        int num_id = Integer.parseInt(id);
-        num_id++;
-        id = String.valueOf(num_id);
-        offerDao.addOffer(offer, id, (Student) session.getAttribute("student"));
+        offerDao.addOffer(offer, (Student) session.getAttribute("student"));
         return "redirect:list";
     }
 

@@ -22,24 +22,13 @@ public class OfferDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void addOffer(Offer offer, String id, Student student) {
+    public void addOffer(Offer offer, Student student) {
         jdbcTemplate.update(
                 "INSERT INTO Offer VALUES(?, ?, ?, ?, ?, ?)",
-                id, student.getId_al(), offer.getId_S(), offer.getDescription(), offer.getStartDate(), offer.getEndDate()
+                offer.getId_O(), student.getId_al(), offer.getId_S(), offer.getDescription(), offer.getStartDate(), offer.getEndDate()
         );
     }
 
-    public Offer lastOffer(){
-        try {
-            return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Offer order by 1 desc fetch first 1 row only",
-                    new OfferRowMapper()
-            );
-        }
-        catch(EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
 
     public void deleteOffer(Offer offer) {
         jdbcTemplate.update(
