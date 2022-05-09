@@ -3,26 +3,26 @@ package com.example.demo.model;
 import java.time.LocalDate;
 
 public class Collaboration {
-    private String id_C;
-    private String id_R;
-    private String id_O;
-    private java.time.LocalDate StartDate;
-    private java.time.LocalDate EndDate;
-    private int score;
+    public int id_C;
+    public int id_R;
+    public int id_O;
+    public java.time.LocalDate StartDate;
+    public java.time.LocalDate EndDate;
+    public int score;
 
     public Collaboration() {}
 
-    public String getId_C() {return id_C;}
+    public int getId_C() {return id_C;}
 
-    public void setId_C(String id_C) {this.id_C = id_C;}
+    public void setId_C(int id_C) {this.id_C = id_C;}
 
-    public String getId_R() {return id_R;}
+    public int getId_R() {return id_R;}
 
-    public void setId_R(String id_R) {this.id_R = id_R;}
+    public void setId_R(int id_R) {this.id_R = id_R;}
 
-    public String getId_O() {return id_O;}
+    public int getId_O() {return id_O;}
 
-    public void setId_O(String id_O) {this.id_O = id_O;}
+    public void setId_O(int id_O) {this.id_O = id_O;}
 
     public LocalDate getStartDate() {return StartDate;}
 

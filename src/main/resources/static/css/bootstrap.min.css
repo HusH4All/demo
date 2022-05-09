@@ -11245,7 +11245,7 @@ fieldset:disabled .btn {
   border-radius: 50%;
 }
 
-.form-group input{
+.form-group input, select{
     height: 42px;
     font-size: 18px;
     padding-left: 54px;

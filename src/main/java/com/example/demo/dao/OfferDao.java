@@ -24,8 +24,8 @@ public class OfferDao {
 
     public void addOffer(Offer offer, Student student) {
         jdbcTemplate.update(
-                "INSERT INTO Offer VALUES(?, ?, ?, ?, ?, ?)",
-                offer.getId_O(), student.getId_al(), offer.getId_S(), offer.getDescription(), offer.getStartDate(), offer.getEndDate()
+                "INSERT INTO Offer(id_al, id_S, description, startdate, enddate, active) VALUES(?, ?, ?, ?, ?, ?)",
+                student.getId_al(), offer.getId_S(), offer.getDescription(), offer.getStartDate(), offer.getEndDate(), offer.getActive()
         );
     }
 
@@ -36,7 +36,7 @@ public class OfferDao {
                 offer.getId_O()
         );
     }
-    public void deleteOffer(String id_O) {
+    public void deleteOffer(int id_O) {
         jdbcTemplate.update(
                 "DELETE FROM Offer WHERE id_O = ?",
                 id_O
@@ -50,7 +50,7 @@ public class OfferDao {
         );
     }
 
-    public Offer getOffer(String id_O) {
+    public Offer getOffer(int id_O) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Offer WHERE id_O = ?",
@@ -66,7 +66,7 @@ public class OfferDao {
     public List<Offer> getOffers(Student student) {
         if (student == null) {
             try {
-                return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
+                return jdbcTemplate.query("SELECT * FROM Offer;",
                         new OfferRowMapper());
             }
             catch(EmptyResultDataAccessException e) {
@@ -75,7 +75,7 @@ public class OfferDao {
         }
         else {
             try {
-                return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al != ?;",
+                return jdbcTemplate.query("SELECT * FROM Offer WHERE id_al != ?;",
                         new OfferRowMapper(),
                         student.getId_al()
                 );
@@ -87,7 +87,7 @@ public class OfferDao {
 
     public List<Offer> getMyOffers(Student student) {
         try {
-            return jdbcTemplate.query("SELECT o.id_o, st.name as id_al, sk.name as id_s, o.description, o.startdate, o.enddate, sk.level as skilllevel FROM Offer as o JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al = ?;",
+            return jdbcTemplate.query("SELECT * FROM Offer WHERE id_al = ?;",
                     new OfferRowMapper(),
                     student.getId_al()
             );
@@ -98,7 +98,7 @@ public class OfferDao {
     }
 
 
-    public SkillType getSkill(String id_S){
+    public SkillType getSkill(int id_S){
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM SkillType WHERE id_S = ?",
@@ -108,6 +108,16 @@ public class OfferDao {
         }
         catch(EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public List<SkillType> getSkillTypes() {
+        try {
+            return jdbcTemplate.query("SELECT * FROM SkillType",
+                    new SkillTypeRowMapper());
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<SkillType>();
         }
     }
 }

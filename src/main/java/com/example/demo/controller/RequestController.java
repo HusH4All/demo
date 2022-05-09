@@ -67,7 +67,7 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/update/{id_R}", method = RequestMethod.GET)
-    public String editRequest(Model model, @PathVariable String id_R) {
+    public String editRequest(Model model, @PathVariable int id_R) {
         model.addAttribute("request", requestDao.getRequest(id_R));
         return "request/update";
     }
@@ -83,7 +83,7 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/delete/{id_R}")
-    public String processDelete(@PathVariable String id_R) {
+    public String processDelete(@PathVariable int id_R) {
         requestDao.deleteRequest(id_R);
         return "redirect:../list";
     }

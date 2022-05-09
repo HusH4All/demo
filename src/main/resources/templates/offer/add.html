@@ -24,15 +24,10 @@
                           th:object="${offer}" method="post">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="ID Offer" th:field="*{id_O}" />
-                    </div>
-
-                    <div class="form-group" id="user-group">
-                        <input type="text" class="form-control" placeholder="Al" th:field="*{id_al}" />
-                    </div>
-
-                    <div class="form-group" id="degree-group">
-                        <input type="text" class="form-control" placeholder="ID Skill" th:field="*{id_S}" />
+                        <select class="form-select" id="exampleSelect1" name="Skill" th:field="*{id_S}">
+                            <option value="0" > Select skill </option>
+                            <option th:each="skill : ${skills}" th:value="${skill.id_S}" th:text="${skill.name + ' (' + skill.level} + ')'"></option>
+                        </select>
                     </div>
 
                     <div class="form-group" id="desc-group">

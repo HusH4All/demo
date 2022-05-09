@@ -1,16 +1,16 @@
 package com.example.demo.model;
 
 public class Student {
-    private String id_al;
-    private String name;
-    private String password;
-    private String email;
-    private String degree;
-    private Integer course;
-    private Integer hours = 0;
-    private Boolean SKP = false;
-    private Boolean active = true;
-    private Boolean banned = false;
+    public String id_al;
+    public String name;
+    public String password;
+    public String email;
+    public String degree;
+    public Integer course;
+    public Integer hours = 0;
+    public Boolean SKP = false;
+    public Boolean active = true;
+    public Boolean banned = false;
 
     public String getId_al() { return id_al; }
 

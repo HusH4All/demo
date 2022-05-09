@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
 public class SkillType {
-    private String id_S;
-    private String name;
-    private String level;
-    private String description;
+    public String id_S;
+    public String name;
+    public String level;
+    public String description;
+    public boolean Active = true;
 
     public SkillType(){}
 
@@ -24,6 +25,8 @@ public class SkillType {
         this.name = name;
     }
 
+    public boolean getActive() {return Active;}
+
     public String getLevel() {
         return level;
     }
@@ -39,6 +42,8 @@ public class SkillType {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setActive(boolean active) {this.Active = active;}
 
     @Override
     public String toString() {

@@ -37,7 +37,7 @@ public class RequestDao {
                 request.getId_R()
         );
     }
-    public void deleteRequest(String id_R) {
+    public void deleteRequest(int id_R) {
         jdbcTemplate.update(
                 "DELETE FROM Request WHERE id_R = ?",
                 id_R
@@ -51,7 +51,7 @@ public class RequestDao {
         );
     }
 
-    public Request getRequest(String id_R) {
+    public Request getRequest(int id_R) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Request WHERE id_R = ?",
@@ -98,7 +98,7 @@ public class RequestDao {
         }
     }
 
-    public SkillType getSkill(String id_S){
+    public SkillType getSkill(int id_S){
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM SkillType WHERE id_S = ?",

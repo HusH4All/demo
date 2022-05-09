@@ -10,9 +10,9 @@ import java.time.LocalDate;
 public final class CollaborationRowMapper implements RowMapper<Collaboration> {
     public Collaboration mapRow(ResultSet rs, int rowNum) throws SQLException{
         Collaboration collaboration = new Collaboration();
-        collaboration.setId_C(rs.getString("id_C"));
-        collaboration.setId_R(rs.getString("id_R"));
-        collaboration.setId_O(rs.getString("id_O"));
+        collaboration.setId_C(rs.getInt("id_C"));
+        collaboration.setId_R(rs.getInt("id_R"));
+        collaboration.setId_O(rs.getInt("id_O"));
         collaboration.setStartDate(rs.getObject("StartDate", LocalDate.class));
         collaboration.setEndDate(rs.getObject("EndDate", LocalDate.class));
         collaboration.setScore(rs.getInt("score"));

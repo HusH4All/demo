@@ -42,7 +42,7 @@ public class SkillTypeController {
         return "redirect:list";
     }
     @RequestMapping(value="/update/{id_S}", method = RequestMethod.GET)
-    public String editSkillType(Model model, @PathVariable String id_S) {
+    public String editSkillType(Model model, @PathVariable int id_S) {
         model.addAttribute("skilltype", skillTypeDao.getSkillType(id_S));
         return "skilltype/update";
     }

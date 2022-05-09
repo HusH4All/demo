@@ -1,6 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.model.Offer;
 import com.example.demo.model.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,8 +22,8 @@ public class SkillTypeDao {
 
     public void addSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "INSERT INTO SkillType VALUES(?, ?, ?, ?)",
-                skill.getId_S(), skill.getName(), skill.getLevel(), skill.getDescription()
+                "INSERT INTO SkillType(name, level, description, active) VALUES(?, ?, ?, ?)",
+                skill.getName(), skill.getLevel(), skill.getDescription(), skill.getActive()
         );
     }
 
@@ -43,12 +42,12 @@ public class SkillTypeDao {
 
     public void updateSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "UPDATE SkillType SET id_S = ?, name = ?, level = ?, description = ?",
-                skill.getId_S(), skill.getName(), skill.getLevel(), skill.getDescription()
+                "UPDATE SkillTypeSET name = ?, description = ?, level = ?",
+                skill.getName(), skill.getDescription(), skill.getLevel()
         );
     }
 
-    public SkillType getSkillType(String id_S) {
+    public SkillType getSkillType(int id_S) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM SkillType WHERE id_S = ?",
@@ -63,7 +62,7 @@ public class SkillTypeDao {
 
     public List<SkillType> getSkillTypes() {
         try {
-            return jdbcTemplate.query("SELECT * FROM SkillType",
+            return jdbcTemplate.query("SELECT distinct * FROM SkillType",
                     new SkillTypeRowMapper());
         }
         catch(EmptyResultDataAccessException e) {

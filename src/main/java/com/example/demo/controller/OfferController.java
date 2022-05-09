@@ -26,7 +26,6 @@ import java.util.Map;
 public class OfferController {
 
     private OfferDao offerDao;
-    private SkillTypeDao skillTypeDao;
 
     @Autowired
     public void setOfferDao(OfferDao offerDao) {
@@ -58,6 +57,7 @@ public class OfferController {
     @RequestMapping(value="/add")
     public String addOffer(Model model) {
         model.addAttribute("offer", new Offer());
+        model.addAttribute("skills", offerDao.getSkillTypes());
         return "offer/add";
     }
 
@@ -72,7 +72,7 @@ public class OfferController {
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
-    public String editOffer(Model model, @PathVariable String id_O) {
+    public String editOffer(Model model, @PathVariable int id_O) {
         model.addAttribute("offer", offerDao.getOffer(id_O));
         return "offer/update";
     }
@@ -88,7 +88,7 @@ public class OfferController {
     }
 
     @RequestMapping(value="/delete/{id_O}")
-    public String processDelete(@PathVariable String id_O) {
+    public String processDelete(@PathVariable int id_O) {
         offerDao.deleteOffer(id_O);
         return "redirect:../list";
     }
