@@ -68,7 +68,7 @@ public class OfferController {
         if (bindingResult.hasErrors())
             return "offer/add";
         offerDao.addOffer(offer, (Student) session.getAttribute("student"));
-        return "redirect:list";
+        return "redirect:myoffers";
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
