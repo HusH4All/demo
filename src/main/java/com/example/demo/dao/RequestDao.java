@@ -24,10 +24,10 @@ public class RequestDao {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void addRequest(Request request) {
+    public void addRequest(Request request, Student student) {
         jdbcTemplate.update(
-                "INSERT INTO Request VALUES(?, ?, ?, ?, ?, ?)",
-                request.getId_R(), request.getId_al(), request.getId_S(), request.getDescription(), request.getStartDate(), request.getEndDate()
+                "INSERT INTO Request(id_al, id_S, description, startdate, enddate, active) VALUES(?, ?, ?, ?, ?, ?)",
+                student.getId_al(), request.getId_S(), request.getDescription(), request.getStartDate(), request.getEndDate(), request.getActive()
         );
     }
 
@@ -108,6 +108,16 @@ public class RequestDao {
         }
         catch(EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public List<SkillType> getSkillTypes() {
+        try {
+            return jdbcTemplate.query("SELECT * FROM SkillType",
+                    new SkillTypeRowMapper());
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<SkillType>();
         }
     }
 }

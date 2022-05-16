@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.RequestDao;
+import com.example.demo.model.Offer;
 import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
@@ -52,17 +53,18 @@ public class RequestController {
     @RequestMapping(value = "/add")
     public String addRequest(Model model) {
         model.addAttribute("request", new Request());
+        model.addAttribute("skills", requestDao.getSkillTypes());
         return "request/add";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(
             @ModelAttribute("request") Request request,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors())
             return "request/add";
-        requestDao.addRequest(request);
-        return "redirect:list";
+        requestDao.addRequest(request, (Student) session.getAttribute("student"));
+        return "redirect:myrequests";
     }
 
     @RequestMapping(value = "/update/{id_R}", method = RequestMethod.GET)
