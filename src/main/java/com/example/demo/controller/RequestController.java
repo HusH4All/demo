@@ -61,8 +61,6 @@ public class RequestController {
     public String processAddSubmit(
             @ModelAttribute("request") Request request,
             BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors())
-            return "request/add";
         requestDao.addRequest(request, (Student) session.getAttribute("student"));
         return "redirect:myrequests";
     }
@@ -79,6 +77,7 @@ public class RequestController {
             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "request/update";
+
         requestDao.updateRequest(request);
         return "redirect:list";
     }

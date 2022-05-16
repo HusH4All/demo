@@ -67,7 +67,7 @@ public class RequestDao {
     public List<Request> getRequests(Student student) {
         if (student == null) {
             try {
-                return jdbcTemplate.query("SELECT r.id_r, st.name as id_al, sk.name as id_s, r.description, r.startdate, r.enddate, sk.level as skilllevel FROM Request as r JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s);",
+                return jdbcTemplate.query("SELECT * FROM Request;",
                         new RequestRowMapper());
             }
             catch(EmptyResultDataAccessException e) {
@@ -76,7 +76,7 @@ public class RequestDao {
         }
         else {
             try {
-                return jdbcTemplate.query("SELECT r.id_r, st.name as id_al, sk.name as id_s, r.description, r.startdate, r.enddate, sk.level as skilllevel FROM Request as r JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al != ?;",
+                return jdbcTemplate.query("SELECT * FROM Request WHERE id_al != ?;",
                         new RequestRowMapper(),
                         student.getId_al()
                 );
@@ -88,7 +88,7 @@ public class RequestDao {
 
     public List<Request> getMyRequests(Student student) {
         try {
-            return jdbcTemplate.query("SELECT r.id_r, st.name as id_al, sk.name as id_s, r.description, r.startdate, r.enddate, sk.level as skilllevel FROM Request as r JOIN student as st USING(id_al) JOIN skilltype as sk USING(id_s) WHERE id_al = ?;",
+            return jdbcTemplate.query("SELECT * FROM Request WHERE id_al = ?;",
                     new RequestRowMapper(),
                     student.getId_al()
             );

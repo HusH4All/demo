@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Request {
@@ -7,7 +9,9 @@ public class Request {
     public String id_al;
     public int id_S;
     public String description;
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     public java.time.LocalDate StartDate;
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     public java.time.LocalDate EndDate;
     public boolean Active = true;
 
