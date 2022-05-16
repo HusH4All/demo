@@ -89,7 +89,7 @@
                                 <div class="card-header" th:text="${collaboration['value'].level}"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        Skill offered :
+                                        Skill requested :
                                         <small style="opacity: 0.7" th:text="${collaboration['value'].name}"></small>
                                     </h5>
                                     <h6 class="card-text">
@@ -103,6 +103,8 @@
                                         <small style="opacity: 0.7" th:text="${collaboration['key'].EndDate}"></small>
                                     </h7>
                                 </div>
+                                <div class="btn-group" role="group" aria-label="Basic example" th:object="${session}">
+                                    <button type="button" class="btn btn-primary shadow-nice">Delete</button>                                </div>
                             </div>
                         </tr>
                         </tbody>
