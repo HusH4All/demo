@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.RequestDao;
-import com.example.demo.model.Offer;
 import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
@@ -58,7 +57,7 @@ public class RequestController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(
-            @ModelAttribute("offer") Request request,
+            @ModelAttribute("request") Request request,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "request/add";
