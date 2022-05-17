@@ -66,12 +66,7 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/update/{id_R}", method = RequestMethod.GET)
-    public String editRequest(Model model, @PathVariable int id_R, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            model.addAttribute("student", new Student());
-            session.setAttribute("nextUrl", "/offer/update");
-            return "login";
-        }
+    public String editRequest(Model model, @PathVariable int id_R) {
         model.addAttribute("request", requestDao.getRequest(id_R));
         return "request/update";
     }
@@ -79,24 +74,17 @@ public class RequestController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("request") Request request,
-            BindingResult bindingResult, HttpSession session){
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "request/update";
-        if (session.getAttribute("student") == null) {
-            session.setAttribute("nextUrl", "/request/delete");
-            return "login";
-        }
-    requestDao.updateRequest(request);
-    return "redirect:list";
+
+        requestDao.updateRequest(request);
+        return "redirect:list";
     }
 
     @RequestMapping(value = "/delete/{id_R}")
-    public String processDelete(@PathVariable int id_C, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            session.setAttribute("nextUrl", "/request/delete");
-            return "login";
-        }
-        requestDao.deleteRequest(id_C);
+    public String processDelete(@PathVariable int id_R) {
+        requestDao.deleteRequest(id_R);
         return "redirect:../list";
     }
 }

@@ -72,12 +72,7 @@ public class OfferController {
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
-    public String editOffer(Model model, @PathVariable int id_O, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            model.addAttribute("student", new Student());
-            session.setAttribute("nextUrl", "/offer/update");
-            return "login";
-        }
+    public String editOffer(Model model, @PathVariable int id_O) {
         model.addAttribute("offer", offerDao.getOffer(id_O));
         return "offer/update";
     }
@@ -85,23 +80,15 @@ public class OfferController {
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("offer") Offer offer,
-            BindingResult bindingResult, HttpSession session){
+            BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return "offer/update";
-        if (session.getAttribute("student") == null) {
-            session.setAttribute("nextUrl", "/offer/delete");
-            return "login";
-        }
         offerDao.updateOffer(offer);
         return "redirect:list";
     }
 
     @RequestMapping(value="/delete/{id_O}")
-    public String processDelete(@PathVariable int id_O, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            session.setAttribute("nextUrl", "/offer/delete");
-            return "login";
-        }
+    public String processDelete(@PathVariable int id_O) {
         offerDao.deleteOffer(id_O);
         return "redirect:../list";
     }
