@@ -72,28 +72,20 @@ public class OfferController {
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
-    public String editOffer(Model model, @PathVariable int id_O, HttpSession session) {
-        if (session.getAttribute("student") == null) {
-            model.addAttribute("student", new Student());
-            session.setAttribute("nextUrl", "/offer/update");
-            return "login";
-        }
+    public String updateOffer(Model model, @PathVariable int id_O) {
         model.addAttribute("offer", offerDao.getOffer(id_O));
+        model.addAttribute("skills", offerDao.getSkillTypes());
         return "offer/update";
     }
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("offer") Offer offer,
-            BindingResult bindingResult, HttpSession session){
+            BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return "offer/update";
-        if (session.getAttribute("student") == null) {
-            session.setAttribute("nextUrl", "/offer/delete");
-            return "login";
-        }
         offerDao.updateOffer(offer);
-        return "redirect:list";
+        return "redirect:myoffers";
     }
 
     @RequestMapping(value="/delete/{id_O}")
