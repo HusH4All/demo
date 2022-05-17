@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Skill Type</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <title>New Skill</title>
+    <meta charset="UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
 </head>
+<div th:replace="fragments/header"></div>
 <body>
-<div class="container">
-    <h2>New Skill Type</h2>
-    <form class="form-horizontal" action="#" th:action="@{/skilltype/add}"
-          th:object="${skilltype}" method="post">
-
-        <div class="form-group row">
-            <label class="control-label col-sm-2" for="Name">Name:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="Name" th:field="*{name}" />
+<div class="modal-dialog text-center">
+    <div class="col-sm-8 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="../photos/addddd.png"/>
             </div>
+            <form class="form-group col-12" action="#" th:action="@{/skilltype/add}"
+                  th:object="${skilltype}" method="post">
+
+                <div class="form-group" id="name-group">
+                    <input type="text" class="form-control" placeholder="Skill" th:field="*{name}"/>
+                </div>
+
+                <div class="form-group" id="desc-group">
+                    <input type="text" class="form-control" placeholder="Description" th:field="*{description}"/>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-select" id="exampleSelect1" name="Level" th:field="*{level}">
+                        <option value="EASY" th:text="EASY"></option>
+                        <option value="MEDIUM" th:text="MEDIUM"></option>
+                        <option value="HARD" th:text="HARD"></option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>Add Skill</button>
+            </form>
         </div>
-
-        <div class="form-group row">
-            <label class="control-label col-sm-2" for="Level">Level:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="Level" th:field="*{level}" />
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="control-label col-sm-2" for="Description">Description:</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="Description" th:field="*{description}"/>
-            </div>
-        </div>
-
-
-        <div class="form-group row">
-            <div class="col-sm-offset-2 col-sm-4">
-                <button type="submit" class="btn btn-primary">Add Skill Type</button>
-            </div>
-        </div>
-
-    </form>
+    </div>
 </div>
 </body>
 </html>
