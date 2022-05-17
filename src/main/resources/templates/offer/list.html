@@ -103,9 +103,9 @@
                                             </h7>
                                             </div>
                                         <div class="btn-group" role="group" aria-label="Basic example" th:object="${session}">
-                                            <a th:if="*{student != null} and *{student.id_al} == ${offer['key'].id_al}" role="button" href="/offer/update" class="btn btn-primary shadow-nice">Collaborate</a>
+                                            <a th:if="*{student != null} and *{student.id_al} != ${offer['key'].id_al}" role="button" href="/offer/update" class="btn btn-primary shadow-nice">Collaborate</a>
                                         </div>
-                                        <div th:if="${session.student != null} and ${session.student.id_al} != ${offer['key'].id_al}" class="btn-group" role="group" aria-label="Basic example">
+                                        <div th:if="${session.student != null} and ${session.student.id_al} == ${offer['key'].id_al}" class="btn-group" role="group" aria-label="Basic example">
                                             <a role="button" href="/offer/update" class="btn btn-primary shadow-nice">Edit</a>
                                             <a role="button" class="btn btn-primary shadow-nice">Delete</a>
                                         </div>
