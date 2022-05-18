@@ -58,7 +58,7 @@ public class LoginController {
         }
 
         if(student.getBanned()){
-            bindingResult.rejectValue("id_al", "banned", "This user has been banned");
+            bindingResult.rejectValue("id_al", "banned", student.getBanMsg());
             return "login";
         }
         session.setAttribute("student", student);

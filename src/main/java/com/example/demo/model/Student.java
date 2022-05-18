@@ -11,6 +11,7 @@ public class Student {
     public Boolean SKP = false;
     public Boolean active = true;
     public Boolean banned = false;
+    public String banMsg;
 
     public String getId_al() { return id_al; }
 
@@ -55,6 +56,10 @@ public class Student {
     public Boolean getBanned() { return banned; }
 
     public void setBanned(Boolean banned){ this.banned=banned; }
+
+    public String getBanMsg() {return banMsg;}
+
+    public void setBanMsg(String banMsg) {this.banMsg = banMsg;}
 
     public void setAll(String id_al, String password, String email, Integer hours, Boolean SKP, Boolean active, Boolean banned){
         this.id_al = id_al;

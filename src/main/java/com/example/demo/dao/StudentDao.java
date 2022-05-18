@@ -87,6 +87,20 @@ public class StudentDao {
         }
     }
 
+    public void setMsg(Student student){
+        jdbcTemplate.update(
+                "UPDATE Student SET ban_message = ? WHERE id_al = ?",
+                student.getBanMsg(), student.getId_al()
+        );
+    }
+
+    public void setMsgUnBan(Student student){
+        jdbcTemplate.update(
+                "UPDATE Student SET ban_message = ? WHERE id_al = ?",
+                "", student.getId_al()
+        );
+    }
+
     public List<Student> getBanneableStudents() {
         try {
             return jdbcTemplate.query("SELECT * FROM Student WHERE SKP = 'false'",

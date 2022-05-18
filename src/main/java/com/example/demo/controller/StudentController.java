@@ -88,15 +88,29 @@ public class StudentController {
         return "student/ban";
     }
 
-    @RequestMapping(value = "/ban/{id_al}")
-    public String processBan(@PathVariable String id_al){
-        studentDao.banStudent(id_al);
+    @RequestMapping(value = "/ban/{id_al}", method = RequestMethod.GET)
+    public String processBan(Model model,@PathVariable String id_al){
+        model.addAttribute("student", studentDao.getStudent(id_al));
+        System.out.println((Student) model.getAttribute("student"));
+        return "/student/msg";
+    }
+
+    @RequestMapping(value = "/msg", method = RequestMethod.POST)
+    public String processBanSubmit(
+            @ModelAttribute("student") Student student,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "student/ban";
+        System.out.println(student.getName());
+        studentDao.banStudent(student.getId_al());
+        studentDao.setMsg(student);
         return "redirect:/student/ban";
     }
 
     @RequestMapping(value = "/unban/{id_al}")
     public String processUnBan(@PathVariable String id_al){
         studentDao.unBanStudent(id_al);
+        studentDao.setMsgUnBan(studentDao.getStudent(id_al));
         return "redirect:/student/ban";
     }
 
