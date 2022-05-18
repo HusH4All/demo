@@ -44,6 +44,12 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String checkLogin(@ModelAttribute("student") Student student, BindingResult bindingResult, HttpSession session){
+        student = studentDao.loadUserByUsername(student.getId_al(), student.getPassword());
+        if (student == null) {
+            bindingResult.rejectValue("password", "bad pw", "Incorrect password");
+            return "login";
+        }
+
         UserValidator userValidator = new UserValidator();
         userValidator.validate(student, bindingResult);
 
@@ -51,16 +57,12 @@ public class LoginController {
             return "login";
         }
 
-        student = studentDao.loadUserByUsername(student.getId_al(), student.getPassword());
-        if (student == null) {
-            bindingResult.rejectValue("password", "bad pw", "Incorrect password");
+        String ban = studentDao.getStudent(student.getId_al()).getBanMsg();
+        if (student.getBanned()) {
+            bindingResult.rejectValue("id_al", "banned", "Ban reason: " + student.getBanMsg());
             return "login";
         }
 
-        if(student.getBanned()){
-            bindingResult.rejectValue("id_al", "banned", student.getBanMsg());
-            return "login";
-        }
         session.setAttribute("student", student);
 
         if ( session.getAttribute("nextUrl") != null){

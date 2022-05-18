@@ -19,7 +19,10 @@
             </div>
             <form class="form-group col-12" th:action="@{/student/msg}" th:object="${student}" method="post">
                 <a>You are banning: <span th:text="${student.id_al}"></span></a>
-                <div class="form-group" id="bsnMsg-group">
+                <div class="form-group" id="name-group">
+                    <input type="text" class="form-control" readonly="readonly" th:field="*{id_al}"/>
+                </div>
+                <div class="form-group" id="desc-group">
                     <input type="text" class="form-control" placeholder="Reason for Ban" th:field="*{banMsg}"/>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Submit</button>

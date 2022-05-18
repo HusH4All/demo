@@ -19,6 +19,7 @@ public final class StudentRowMapper implements RowMapper<Student> {
         student.setSKP(rs.getBoolean("SKP"));
         student.setActive(rs.getBoolean("active"));
         student.setBanned(rs.getBoolean("banned"));
+        student.setBanMsg(rs.getString("ban_message"));
         return student;
     }
 }

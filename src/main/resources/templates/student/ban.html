@@ -84,7 +84,7 @@
                                         <td th:text="${student.hours}"></td>
                                         <td>
                                             <a th:if="*{student.banned}" class="btn btn-outline-success btnpordios" th:href="@{/student/unban/{id_al}(id_al=${student.id_al})}">Unban</a>
-                                            <a th:unless="*{student.banned}" class="btn btn-outline-danger btnpordios" th:href="@{/student/ban/{id_al}(id_al=${student.id_al})}">Ban</a>
+                                            <a th:unless="*{student.banned}" class="btn btn-outline-danger btnpordios" th:href="@{/student/msg/{id_al}(id_al=${student.id_al})}">Ban</a>
                                         </td>
                                     </tr>
                                 </tbody>
