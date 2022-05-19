@@ -77,6 +77,18 @@ public class RequestDao {
         }
     }
 
+    public List<Request> getDisabledRequests() {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Request WHERE active = false",
+                    new RequestRowMapper()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     public List<Request> getRequests(Student student) {
         if (student == null) {
             try {

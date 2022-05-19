@@ -88,6 +88,30 @@ public class CollaborationDao {
         }
     }
 
+    public Collaboration getPendingCollaborationFromOffer(int id_O) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM Collaboration WHERE id_O = ? and requesting != ?;",
+                    new CollaborationRowMapper(),
+                    id_O, id_O
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new Collaboration();
+        }
+    }
+
+    public Collaboration getPendingCollaborationFromRequest(int id_R) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM Collaboration WHERE id_R = ? and requesting != ?;",
+                    new CollaborationRowMapper(),
+                    id_R, id_R
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new Collaboration();
+        }
+    }
+
     public Student getStudent(String id_al) {
         try {
             return jdbcTemplate.queryForObject(

@@ -48,10 +48,20 @@ public class CollaborationController {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
         List<Collaboration> collaborations = new LinkedList<>();
+        Collaboration c;
 
-        for (Offer offer : offerDao.getDisabledOffers(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromOffer(offer.getId_O()));
-        for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
+        for (Offer offer : offerDao.getMyOffers(user)) {
+            c = collaborationDao.getCollaborationFromOffer(offer.getId_O());
+            if (c != null && c.getStartDate() != null)
+                collaborations.add(c);
 
+        }
+
+        for (Request request : requestDao.getMyRequests(user)) {
+            c = collaborationDao.getCollaborationFromRequest(request.getId_R());
+            if (c != null && c.getStartDate() != null)
+                collaborations.add(c);
+        }
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && !collaboration.pending) {
                 Offer offer = offerDao.getOffer(collaboration.getId_O());
@@ -69,9 +79,23 @@ public class CollaborationController {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
         List<Collaboration> collaborations = new LinkedList<>();
+        Collaboration c;
 
-        for (Offer offer : offerDao.getDisabledOffers(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromOffer(offer.getId_O()));
-        for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
+        for (Offer offer : offerDao.getMyOffers(user)) {
+            if (offer.getActive()) {
+                c = collaborationDao.getPendingCollaborationFromOffer(offer.getId_O());
+                if (c != null && c.getStartDate() != null)
+                    collaborations.add(c);
+            }
+        }
+
+        for (Request request : requestDao.getMyRequests(user)) {
+            if (request.getActive()) {
+                c = collaborationDao.getPendingCollaborationFromRequest(request.getId_R());
+                if (c != null && c.getStartDate() != null)
+                    collaborations.add(c);
+            }
+        }
 
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && collaboration.pending) {

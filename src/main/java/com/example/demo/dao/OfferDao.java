@@ -77,6 +77,18 @@ public class OfferDao {
         }
     }
 
+    public List<Offer> getDisabledOffers() {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Offer WHERE active = false",
+                    new OfferRowMapper()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     public List<Offer> getOffers(Student student) {
         if (student == null) {
             try {
