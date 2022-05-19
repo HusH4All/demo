@@ -24,18 +24,18 @@ public class CollaborationDao {
 
     public void addCollaboration(Collaboration collaboration) {
         jdbcTemplate.update(
-                "INSERT INTO Collaboration(id_R, id_O, StartDate, EndDate, pending) VALUES(?, ?, ?, ?, ?)",
-                collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.pending
+                "INSERT INTO Collaboration(id_R, id_O, StartDate, EndDate, pending, requesting) VALUES(?, ?, ?, ?, ?, ?)",
+                collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.getPending(), collaboration.getRequesting()
         );
     }
 
-    public void deleteCollaboration(Collaboration collaboration) {
+    public void acceptCollaboration(int id_C) {
         jdbcTemplate.update(
-                "DELETE FROM Collaboration WHERE id_C = ?",
-                collaboration.getId_C()
+                "UPDATE Collaboration SET pending = false WHERE id_C = ?",
+                id_C
         );
     }
-    public void deleteCollaboration(String id_C) {
+    public void deleteCollaboration(int id_C) {
         jdbcTemplate.update(
                 "DELETE FROM Collaboration WHERE id_C = ?",
                 id_C
@@ -49,7 +49,7 @@ public class CollaborationDao {
         );
     }
 
-    public Collaboration getCollaboration(String id_C) {
+    public Collaboration getCollaboration(int id_C) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Collaboration WHERE id_C = ?",

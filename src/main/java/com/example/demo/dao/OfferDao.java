@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Offer;
+import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,5 +133,12 @@ public class OfferDao {
         catch(EmptyResultDataAccessException e) {
             return new ArrayList<SkillType>();
         }
+    }
+
+    public Offer getLastOffer(){
+        return jdbcTemplate.queryForObject(
+                "select * from offer order by id_o desc fetch first 1 rows only",
+                new OfferRowMapper()
+        );
     }
 }

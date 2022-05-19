@@ -18,10 +18,12 @@ public class Offer {
 
     public Offer(){}
 
-    public Offer(String id_al, LocalDate StartDate, LocalDate EndDate){
+    public Offer(String id_al, int id_S, LocalDate StartDate, LocalDate EndDate, boolean active){
         this.id_al = id_al;
+        this.id_S = id_S;
         this.StartDate = StartDate;
         this.EndDate = EndDate;
+        this.Active = active;
     }
 
     public int getId_O() {return id_O;}

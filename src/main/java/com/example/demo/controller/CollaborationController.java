@@ -53,7 +53,7 @@ public class CollaborationController {
         for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
 
         for (Collaboration collaboration : collaborations) {
-            if (!collaboration.pending) {
+            if (collaboration != null && !collaboration.pending) {
                 Offer offer = offerDao.getOffer(collaboration.getId_O());
                 Request request = requestDao.getRequest(collaboration.getId_R());
                 StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
@@ -74,7 +74,7 @@ public class CollaborationController {
         for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
 
         for (Collaboration collaboration : collaborations) {
-            if (collaboration.pending) {
+            if (collaboration != null && collaboration.pending) {
                 Offer offer = offerDao.getOffer(collaboration.getId_O());
                 Request request = requestDao.getRequest(collaboration.getId_R());
                 StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
@@ -85,16 +85,28 @@ public class CollaborationController {
         return "collaboration/pending";
     }
 
-    @RequestMapping(value="/add/{id_O}")
+    @RequestMapping(value="/addOffer/{id_O}")
     public String addCollaborationOffer(HttpSession session, @PathVariable int id_O) {
         Offer offer = offerDao.getOffer(id_O);
         Student user = (Student) session.getAttribute("student");
         Request request = new Request(user.getId_al(), offer.getId_S(), offer.getStartDate(), offer.getEndDate(), false);
         requestDao.addRequest(request, user);
         request = requestDao.getLastRequest();
-        Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true);
+        Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, request.getId_R());
         collaborationDao.addCollaboration(collaboration);
-        return "redirect:../list";
+        return "redirect:../../offer/list";
+    }
+
+    @RequestMapping(value="/addRequest/{id_R}")
+    public String addCollaborationRequest(HttpSession session, @PathVariable int id_R) {
+        Request request = requestDao.getRequest(id_R);
+        Student user = (Student) session.getAttribute("student");
+        Offer offer = new Offer(user.getId_al(), request.getId_S(), request.getStartDate(), request.getEndDate(), false);
+        offerDao.addOffer(offer, user);
+        offer = offerDao.getLastOffer();
+        Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), request.getStartDate(), request.getEndDate(), true, offer.getId_O());
+        collaborationDao.addCollaboration(collaboration);
+        return "redirect:../../request/list";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
@@ -108,7 +120,7 @@ public class CollaborationController {
     }
 
     @RequestMapping(value="/update/{id_C}", method = RequestMethod.GET)
-    public String editCollaboration(Model model, @PathVariable String id_C) {
+    public String editCollaboration(Model model, @PathVariable int id_C) {
         model.addAttribute("collaboration", collaborationDao.getCollaboration(id_C));
         return "collaboration/update";
     }
@@ -123,9 +135,20 @@ public class CollaborationController {
         return "redirect:list";
     }
 
-    @RequestMapping(value="/delete/{id_C}")
-    public String processDelete(@PathVariable String id_C) {
-        collaborationDao.deleteCollaboration(id_C);
+    @RequestMapping(value = "/accept/{id_C}")
+    public String processAcceptSubmit(@PathVariable int id_C){
+        collaborationDao.acceptCollaboration(id_C);
         return "redirect:../list";
+    }
+
+    @RequestMapping(value="/deny/{id_C}")
+    public String processDeny(@PathVariable int id_C) {
+        Collaboration collaboration = collaborationDao.getCollaboration(id_C);
+        if (collaboration.getId_O() == collaboration.getRequesting())
+            offerDao.deleteOffer(collaboration.getId_O());
+        else
+            requestDao.deleteRequest(collaboration.getId_R());
+        collaborationDao.deleteCollaboration(id_C);
+        return "redirect:../pending";
     }
 }

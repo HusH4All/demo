@@ -11,15 +11,17 @@ public class Collaboration {
     public Boolean state = true;
     public int score;
     public Boolean pending = true;
+    public int requesting;
 
     public Collaboration() {}
 
-    public Collaboration(int id_R, int id_O, LocalDate StartDate, LocalDate EndDate, Boolean pending){
+    public Collaboration(int id_R, int id_O, LocalDate StartDate, LocalDate EndDate, Boolean pending, int requesting){
         this.id_R = id_R;
         this.id_O = id_O;
         this.StartDate = StartDate;
         this.EndDate = EndDate;
         this.pending = pending;
+        this.requesting = requesting;
     }
 
     public int getId_C() {return id_C;}
@@ -53,6 +55,10 @@ public class Collaboration {
     public Boolean getPending() {return pending;}
 
     public void setPending(Boolean pending) {this.pending = pending;}
+
+    public int getRequesting() {return requesting;}
+
+    public void setRequesting(int requesting) {this.requesting = requesting;}
 
     @Override
     public String toString() {

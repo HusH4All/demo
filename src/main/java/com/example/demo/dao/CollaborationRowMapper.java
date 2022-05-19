@@ -18,6 +18,7 @@ public final class CollaborationRowMapper implements RowMapper<Collaboration> {
         collaboration.setScore(rs.getInt("score"));
         collaboration.setState(rs.getBoolean("state"));
         collaboration.setPending(rs.getBoolean("pending"));
+        collaboration.setScore(rs.getInt("requesting"));
         return collaboration;
     }
 }
