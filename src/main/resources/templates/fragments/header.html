@@ -42,8 +42,8 @@
                 <li class="nav-item dropdown" th:object="${session}">
                     <a th:unless="*{student == null}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Collaborations</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/request/myrequests">Collaboration management</a>
-                        <a class="dropdown-item" href="/request/list">My Collaborations</a>
+                        <a class="dropdown-item" href="/collaboration/pending">Management</a>
+                        <a class="dropdown-item" href="/collaboration/list">My Collaborations</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" th:object="${session}">

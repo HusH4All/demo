@@ -3,11 +3,10 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"/>
-    <title>Collaborations</title>
+    <title>Offers</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
-    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <style>
         body{
         margin-top:20px;
@@ -86,15 +85,19 @@
                         <tbody>
                         <tr th:each="collaboration: ${collaborations}" class="separar">
                             <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
-                                <div class="card-header" th:text="${collaboration['value'].level}"></div>
+                                <div class="card-header" th:text="${collaboration['value'].skillType.level}"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        Skill requested :
-                                        <small style="opacity: 0.7" th:text="${collaboration['value'].name}"></small>
+                                        Skill offered :
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].skillType.name}"></small>
                                     </h5>
                                     <h6 class="card-text">
-                                        Description:
-                                        <small style="opacity: 0.7" th:text="${collaboration['key'].description}"></small>
+                                        Teacher:
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].teacher.name}"></small>
+                                    </h6>
+                                    <h6 class="card-text">
+                                        Student:
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].student.name}"></small>
                                     </h6>
                                     <h7 class="card-text">
                                         From:
@@ -103,8 +106,10 @@
                                         <small style="opacity: 0.7" th:text="${collaboration['key'].EndDate}"></small>
                                     </h7>
                                 </div>
-                                <div class="btn-group" role="group" aria-label="Basic example" th:object="${session}">
-                                    <button type="button" class="btn btn-primary shadow-nice">Delete</button>                                </div>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a role="button" class="btn btn-primary shadow-nice">Edit</a>
+                                    <a role="button" class="btn btn-primary shadow-nice">Close</a>
+                                </div>
                             </div>
                         </tr>
                         </tbody>

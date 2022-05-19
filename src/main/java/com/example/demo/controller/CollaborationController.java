@@ -3,10 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dao.CollaborationDao;
 import com.example.demo.dao.OfferDao;
 import com.example.demo.dao.RequestDao;
-import com.example.demo.model.Collaboration;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Request;
-import com.example.demo.model.Student;
+import com.example.demo.dao.SkillTypeDao;
+import com.example.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/collaboration")
@@ -42,9 +44,45 @@ public class CollaborationController {
     }
 
     @RequestMapping("/list")
-    public String listCollaborations(Model model) {
-        model.addAttribute("collaboration", collaborationDao.getCollaborations());
+    public String listCollaborations(Model model, HttpSession session) {
+        Student user = (Student) session.getAttribute("student");
+        Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
+        List<Collaboration> collaborations = new LinkedList<>();
+
+        for (Offer offer : offerDao.getDisabledOffers(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromOffer(offer.getId_O()));
+        for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
+
+        for (Collaboration collaboration : collaborations) {
+            if (!collaboration.pending) {
+                Offer offer = offerDao.getOffer(collaboration.getId_O());
+                Request request = requestDao.getRequest(collaboration.getId_R());
+                StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
+                collaborationMap.put(collaboration, studentsColaborating);
+            }
+        }
+        model.addAttribute("collaborations", collaborationMap);
         return "collaboration/list";
+    }
+
+    @RequestMapping("/pending")
+    public String listPendingCollaborations(Model model, HttpSession session) {
+        Student user = (Student) session.getAttribute("student");
+        Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
+        List<Collaboration> collaborations = new LinkedList<>();
+
+        for (Offer offer : offerDao.getDisabledOffers(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromOffer(offer.getId_O()));
+        for (Request request : requestDao.getDisabledRequests(user.getId_al())) collaborations.add(collaborationDao.getCollaborationFromRequest(request.getId_R()));
+
+        for (Collaboration collaboration : collaborations) {
+            if (collaboration.pending) {
+                Offer offer = offerDao.getOffer(collaboration.getId_O());
+                Request request = requestDao.getRequest(collaboration.getId_R());
+                StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
+                collaborationMap.put(collaboration, studentsColaborating);
+            }
+        }
+        model.addAttribute("collaborations", collaborationMap);
+        return "collaboration/pending";
     }
 
     @RequestMapping(value="/add/{id_O}")
