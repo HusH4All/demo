@@ -16,6 +16,8 @@ public final class CollaborationRowMapper implements RowMapper<Collaboration> {
         collaboration.setStartDate(rs.getObject("StartDate", LocalDate.class));
         collaboration.setEndDate(rs.getObject("EndDate", LocalDate.class));
         collaboration.setScore(rs.getInt("score"));
+        collaboration.setState(rs.getBoolean("state"));
+        collaboration.setPending(rs.getBoolean("pending"));
         return collaboration;
     }
 }

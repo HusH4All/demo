@@ -120,4 +120,11 @@ public class RequestDao {
             return new ArrayList<SkillType>();
         }
     }
+
+    public Request getLastRequest(){
+        return jdbcTemplate.queryForObject(
+                "select * from request order by id_r desc fetch first 1 rows only",
+                new RequestRowMapper()
+        );
+    }
 }

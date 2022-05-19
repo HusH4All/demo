@@ -8,12 +8,22 @@ public class Request {
     public int id_R;
     public String id_al;
     public int id_S;
-    public String description;
+    public String description = "";
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     public java.time.LocalDate StartDate;
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     public java.time.LocalDate EndDate;
     public boolean Active = true;
+
+    public Request(){}
+
+    public Request(String id_al, int id_S, LocalDate StartDate, LocalDate EndDate, boolean active){
+        this.id_al = id_al;
+        this.id_S = id_S;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
+        this.Active = active;
+    }
 
     public int getId_R() { return id_R; }
 

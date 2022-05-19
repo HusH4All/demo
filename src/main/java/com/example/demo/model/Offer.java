@@ -9,7 +9,7 @@ public class Offer {
     public int id_O;
     public String id_al;
     public int id_S;
-    public String description;
+    public String description = "";
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     public LocalDate StartDate;
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
@@ -17,6 +17,12 @@ public class Offer {
     public boolean Active = true;
 
     public Offer(){}
+
+    public Offer(String id_al, LocalDate StartDate, LocalDate EndDate){
+        this.id_al = id_al;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
+    }
 
     public int getId_O() {return id_O;}
 
@@ -45,6 +51,7 @@ public class Offer {
     public void setEndDate(LocalDate endDate) {this.EndDate = endDate;}
 
     public void setActive(boolean active) {this.Active = active;}
+
     @Override
     public String toString() {
         return "Offer{" +
