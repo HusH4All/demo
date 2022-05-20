@@ -117,6 +117,7 @@ public class CollaborationController {
         requestDao.addRequest(request, user);
         request = requestDao.getLastRequest();
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, request.getId_R());
+        //offerDao.disableOffer(offer);
         collaborationDao.addCollaboration(collaboration);
         return "redirect:../../offer/list";
     }
@@ -129,12 +130,23 @@ public class CollaborationController {
         offerDao.addOffer(offer, user);
         offer = offerDao.getLastOffer();
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), request.getStartDate(), request.getEndDate(), true, offer.getId_O());
+        //requestDao.disableRequest(request);
         collaborationDao.addCollaboration(collaboration);
         return "redirect:../../request/list";
     }
 
-    @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(
+    @RequestMapping(value="/addSR/{id_r}")
+    public String processAddSR(@PathVariable int id_r, HttpSession session) {
+        Offer offer = (Offer) session.getAttribute("offer");
+        Request request = requestDao.getRequest(id_r);
+        Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, offer.getId_O());
+        collaborationDao.addCollaboration(collaboration);
+        offerDao.disableOffer(offer);
+        return "redirect:../../offer/list";
+    }
+
+    @RequestMapping(value="/addSO", method= RequestMethod.POST)
+    public String processAddSO(
             @ModelAttribute("collaboration") Collaboration collaboration,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors())
@@ -162,6 +174,9 @@ public class CollaborationController {
     @RequestMapping(value = "/accept/{id_C}")
     public String processAcceptSubmit(@PathVariable int id_C){
         collaborationDao.acceptCollaboration(id_C);
+        Collaboration collaboration = collaborationDao.getCollaboration(id_C);
+        offerDao.disableOffer(offerDao.getOffer(collaboration.getId_O()));
+        requestDao.disableRequest(requestDao.getRequest(collaboration.getId_R()));
         return "redirect:../list";
     }
 

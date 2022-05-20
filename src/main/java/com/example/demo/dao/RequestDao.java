@@ -31,9 +31,9 @@ public class RequestDao {
         );
     }
 
-    public void deleteRequest(Request request) {
+    public void disableRequest(Request request) {
         jdbcTemplate.update(
-                "DELETE FROM Request WHERE id_R = ?",
+                "UPDATE Request SET active = false WHERE id_R = ?",
                 request.getId_R()
         );
     }
@@ -57,6 +57,19 @@ public class RequestDao {
                     "SELECT * FROM Request WHERE id_R = ?",
                     new RequestRowMapper(),
                     id_R
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public List<Request> getSimilarRequests(int id_S, Student student) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Request WHERE id_S = ? and id_al != ?",
+                    new RequestRowMapper(),
+                    id_S, student.getId_al()
             );
         }
         catch(EmptyResultDataAccessException e) {

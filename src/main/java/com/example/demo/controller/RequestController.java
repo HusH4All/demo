@@ -33,9 +33,15 @@ public class RequestController {
     public String listRequests(HttpSession session, Model model) {
         Map<Request, SkillType> requestSkillTypeMap = new HashMap<>();
         if (session.getAttribute("student") == null) {
-            for (Request request : requestDao.getRequests(null)) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+            for (Request request : requestDao.getRequests(null)){
+                if (requestDao.getRequest(request.getId_R()).getActive())
+                    requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+            }
         }
-        else for (Request request : requestDao.getRequests((Student) session.getAttribute("student"))) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+        else for (Request request : requestDao.getRequests((Student) session.getAttribute("student"))){
+            if (requestDao.getRequest(request.getId_R()).getActive())
+                requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+        }
 
         model.addAttribute("requests", requestSkillTypeMap);
         return "request/list";
@@ -48,6 +54,16 @@ public class RequestController {
 
         model.addAttribute("requests", requestSkillTypeMap);
         return "request/list";
+    }
+
+    @RequestMapping("/similarRequests")
+    public String listSimilarRequests(HttpSession session, Model model) {
+        Map<Request, SkillType> requestSkillTypeMap = new HashMap<>();
+        Offer offer = (Offer) session.getAttribute("offer");
+        for (Request request : requestDao.getSimilarRequests(offer.getId_S(), (Student) session.getAttribute("student"))) requestSkillTypeMap.put(request, requestDao.getSkill(requestDao.getRequest(request.getId_R()).getId_S()));
+
+        model.addAttribute("requests", requestSkillTypeMap);
+        return "request/similarRequests";
     }
 
     @RequestMapping(value = "/add")

@@ -36,9 +36,15 @@ public class OfferController {
     public String listOffers(HttpSession session, Model model) {
         Map<Offer, SkillType> offerSkillTypeMap = new HashMap<>();
         if (session.getAttribute("student") == null) {
-            for (Offer offer : offerDao.getOffers(null)) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+            for (Offer offer : offerDao.getOffers(null)) {
+                if (offerDao.getOffer(offer.getId_O()).getActive())
+                    offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+            }
         }
-        else for (Offer offer : offerDao.getOffers((Student) session.getAttribute("student"))) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+        else for (Offer offer : offerDao.getOffers((Student) session.getAttribute("student"))){
+            if (offerDao.getOffer(offer.getId_O()).getActive())
+                offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+        }
 
         model.addAttribute("offers", offerSkillTypeMap);
         return "offer/list";
@@ -53,6 +59,10 @@ public class OfferController {
         return "offer/list";
     }
 
+    @RequestMapping(value="/addfin")
+    public String addOfferFin() {
+        return "redirect:myoffers";
+    }
 
     @RequestMapping(value="/add")
     public String addOffer(Model model) {
@@ -68,7 +78,9 @@ public class OfferController {
         if (bindingResult.hasErrors())
             return "offer/add";
         offerDao.addOffer(offer, (Student) session.getAttribute("student"));
-        return "redirect:myoffers";
+        offer = offerDao.getLastOffer();
+        session.setAttribute("offer", offer);
+        return "redirect:../request/similarRequests";
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
