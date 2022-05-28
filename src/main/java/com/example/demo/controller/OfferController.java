@@ -41,9 +41,11 @@ public class OfferController {
                     offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
             }
         }
-        else for (Offer offer : offerDao.getOffers((Student) session.getAttribute("student"))){
-            if (offerDao.getOffer(offer.getId_O()).getActive())
-                offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+        else {
+            for (Offer offer : offerDao.getOffers((Student) session.getAttribute("student"))) {
+                if (offerDao.getOffer(offer.getId_O()).getActive())
+                    offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+            }
         }
 
         model.addAttribute("offers", offerSkillTypeMap);

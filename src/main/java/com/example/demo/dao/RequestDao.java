@@ -77,6 +77,19 @@ public class RequestDao {
         }
     }
 
+    public List<Request> getPendingRequests(Student student){
+        try {
+            return jdbcTemplate.query(
+                    "Select r.* from request as r join collaboration as c using(id_r) join offer as o using(id_o) where o.id_al = ? and c.pending = true and c.requesting != r.id_r",
+                    new RequestRowMapper(),
+                    student.getId_al()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Request>();
+        }
+    }
+
     public List<Request> getDisabledRequests(String id_al) {
         try {
             return jdbcTemplate.query(

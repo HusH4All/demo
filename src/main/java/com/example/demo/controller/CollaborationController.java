@@ -74,7 +74,7 @@ public class CollaborationController {
         return "collaboration/list";
     }
 
-    @RequestMapping("/pending")
+    @RequestMapping("/management")
     public String listPendingCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
@@ -106,6 +106,41 @@ public class CollaborationController {
             }
         }
         model.addAttribute("collaborations", collaborationMap);
+        return "collaboration/management";
+    }
+
+    @RequestMapping(value="/pending")
+    public String listRequestedCollaborations(Model model, HttpSession session) {
+        Student user = (Student) session.getAttribute("student");
+        Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
+        List<Collaboration> collaborations = new LinkedList<>();
+        Collaboration c;
+
+        for (Offer offer : offerDao.getPendingOffers(user)) {
+            if (offer.getActive()) {
+                c = collaborationDao.getPendingCollaborationFromOffer(offer.getId_O());
+                if (c != null && c.getStartDate() != null)
+                    collaborations.add(c);
+            }
+        }
+
+        for (Request request : requestDao.getPendingRequests(user)) {
+            if (request.getActive()) {
+                c = collaborationDao.getPendingCollaborationFromRequest(request.getId_R());
+                if (c != null && c.getStartDate() != null)
+                    collaborations.add(c);
+            }
+        }
+
+        for (Collaboration collaboration : collaborations) {
+            if (collaboration != null && collaboration.pending) {
+                Offer offer = offerDao.getOffer(collaboration.getId_O());
+                Request request = requestDao.getRequest(collaboration.getId_R());
+                StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
+                collaborationMap.put(collaboration, studentsColaborating);
+            }
+        }
+        model.addAttribute("collaborations", collaborationMap);
         return "collaboration/pending";
     }
 
@@ -117,9 +152,8 @@ public class CollaborationController {
         requestDao.addRequest(request, user);
         request = requestDao.getLastRequest();
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, request.getId_R());
-        //offerDao.disableOffer(offer);
         collaborationDao.addCollaboration(collaboration);
-        return "redirect:../../offer/list";
+        return "redirect:../../collaboration/pending";
     }
 
     @RequestMapping(value="/addRequest/{id_R}")
@@ -130,9 +164,8 @@ public class CollaborationController {
         offerDao.addOffer(offer, user);
         offer = offerDao.getLastOffer();
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), request.getStartDate(), request.getEndDate(), true, offer.getId_O());
-        //requestDao.disableRequest(request);
         collaborationDao.addCollaboration(collaboration);
-        return "redirect:../../request/list";
+        return "redirect:../../collaboration/pending";
     }
 
     @RequestMapping(value="/addSR/{id_r}")
@@ -188,6 +221,6 @@ public class CollaborationController {
         else
             requestDao.deleteRequest(collaboration.getId_R());
         collaborationDao.deleteCollaboration(id_C);
-        return "redirect:../pending";
+        return "redirect:../management";
     }
 }

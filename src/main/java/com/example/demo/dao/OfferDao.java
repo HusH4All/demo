@@ -102,6 +102,19 @@ public class OfferDao {
         }
     }
 
+    public List<Offer> getPendingOffers(Student student){
+        try {
+            return jdbcTemplate.query(
+                    "Select o.* from offer as o join collaboration as c using(id_o) join request as r using(id_r) where r.id_al = ? and c.pending = true and c.requesting != id_o",
+                    new OfferRowMapper(),
+                    student.getId_al()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Offer>();
+        }
+    }
+
     public List<Offer> getOffers(Student student) {
         if (student == null) {
             try {
@@ -114,8 +127,9 @@ public class OfferDao {
         }
         else {
             try {
-                return jdbcTemplate.query("SELECT * FROM Offer WHERE id_al != ?;",
+                return jdbcTemplate.query("select * from offer where id_al != ? except Select o.* from offer as o join collaboration as c using(id_o) join request as r using(id_r) where r.id_al = ? and c.pending = 't' and c.requesting != o.id_o;",
                         new OfferRowMapper(),
+                        student.getId_al(),
                         student.getId_al()
                 );
             } catch (EmptyResultDataAccessException e) {

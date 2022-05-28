@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
-              th:href="@{/css/bootstrap.min.css}"/>
-        <title>Offers</title>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
-        <style>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <title>Queue</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
+    <style>
             body{
             margin-top:20px;
             color: #593196;
@@ -73,51 +73,50 @@
               grid-gap: 10px;
             }
         </style>
-    </head>
-    <div th:replace="fragments/header"></div>
-    <body>
-        <div class="container">
-            <div class="main-body">
-                <div class="row gutters-sm">
-                    <div class="md-5 mb-3">
-                        <div class="wrapper">
-                            <table>
-                                <tbody>
-                                    <tr th:each="collaboration: ${collaborations}" class="separar">
-                                        <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
-                                            <div class="card-header" th:text="${collaboration['value'].skillType.level}"></div>
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-                                                    Skill offered :
-                                                    <small style="opacity: 0.7" th:text="${collaboration['value'].skillType.name}"></small>
-                                                </h5>
-                                                <h6 class="card-text">
-                                                    Teacher:
-                                                    <small style="opacity: 0.7" th:text="${collaboration['value'].teacher.name}"></small>
-                                                </h6>
-                                                <h6 class="card-text">
-                                                    Student:
-                                                    <small style="opacity: 0.7" th:text="${collaboration['value'].student.name}"></small>
-                                                </h6>
-                                                <h7 class="card-text">
-                                                    From:
-                                                    <small style="opacity: 0.7" th:text="${collaboration['key'].StartDate}"></small>
-                                                    To:
-                                                    <small style="opacity: 0.7" th:text="${collaboration['key'].EndDate}"></small>
-                                                </h7>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a role="button" th:href="@{/collaboration/accept/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice">Accept</a>
-                                                <a role="button" th:href="@{/collaboration/deny/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice">Deny</a>
-                                            </div>
-                                        </div>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+</head>
+<div th:replace="fragments/header"></div>
+<body>
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="md-5 mb-3">
+                <div class="wrapper">
+                    <table>
+                        <tbody>
+                        <tr th:each="collaboration: ${collaborations}" class="separar">
+                            <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+                                <div class="card-header" th:text="${collaboration['value'].skillType.level}"></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        Skill offered :
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].skillType.name}"></small>
+                                    </h5>
+                                    <h6 class="card-text">
+                                        Teacher:
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].teacher.name}"></small>
+                                    </h6>
+                                    <h6 class="card-text">
+                                        Student:
+                                        <small style="opacity: 0.7" th:text="${collaboration['value'].student.name}"></small>
+                                    </h6>
+                                    <h7 class="card-text">
+                                        From:
+                                        <small style="opacity: 0.7" th:text="${collaboration['key'].StartDate}"></small>
+                                        To:
+                                        <small style="opacity: 0.7" th:text="${collaboration['key'].EndDate}"></small>
+                                    </h7>
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a role="button" class="btn btn-primary shadow-nice disabled">Pending confirmation</a>
+                                </div>
+                            </div>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>
