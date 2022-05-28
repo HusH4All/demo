@@ -175,7 +175,7 @@ public class CollaborationController {
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, offer.getId_O());
         collaborationDao.addCollaboration(collaboration);
         offerDao.disableOffer(offer);
-        return "redirect:../../offer/list";
+        return "redirect:../../collaboration/pending";
     }
 
     @RequestMapping(value="/addSO", method= RequestMethod.POST)
