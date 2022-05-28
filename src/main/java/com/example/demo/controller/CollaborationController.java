@@ -49,8 +49,8 @@ public class CollaborationController {
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
         Collaboration c;
 
-        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
-        collaborations.addAll(collaborationDao.getPendingCollaborationFromRequest(user));
+        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getCollaborationFromOffer(user));
+        collaborations.addAll(collaborationDao.getCollaborationFromRequest(user));
 
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && !collaboration.pending) {
