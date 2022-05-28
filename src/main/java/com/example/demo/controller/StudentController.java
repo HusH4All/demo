@@ -91,14 +91,12 @@ public class StudentController {
     @RequestMapping(value = "/msg/{id_al}", method = RequestMethod.GET)
     public String processBan(Model model,@PathVariable String id_al){
         model.addAttribute("student", studentDao.getStudent(id_al));
-        System.out.println(studentDao.getStudent(id_al));
         return "/student/msg";
     }
 
     @RequestMapping(value = "/msg", method = RequestMethod.POST)
     public String processBanSubmit(
             @ModelAttribute("student") Student student) {
-        System.out.println(student.getId_al());
         studentDao.banStudent(student.getId_al());
         studentDao.setMsg(student);
         return "redirect:/student/ban";

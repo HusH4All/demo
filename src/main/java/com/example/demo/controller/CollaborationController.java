@@ -47,15 +47,9 @@ public class CollaborationController {
     public String listCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
-        List<Collaboration> collaborations = new LinkedList<>();
         Collaboration c;
 
-        for (Offer offer : offerDao.getMyOffers(user)) {
-            c = collaborationDao.getCollaborationFromOffer(offer.getId_O());
-            if (c != null && c.getStartDate() != null)
-                collaborations.add(c);
-
-        }
+        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
 
         for (Request request : requestDao.getMyRequests(user)) {
             c = collaborationDao.getCollaborationFromRequest(request.getId_R());
@@ -78,16 +72,9 @@ public class CollaborationController {
     public String listPendingCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
-        List<Collaboration> collaborations = new LinkedList<>();
         Collaboration c;
 
-        for (Offer offer : offerDao.getMyOffers(user)) {
-            if (offer.getActive()) {
-                c = collaborationDao.getPendingCollaborationFromOffer(offer.getId_O());
-                if (c != null && c.getStartDate() != null)
-                    collaborations.add(c);
-            }
-        }
+        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
 
         for (Request request : requestDao.getMyRequests(user)) {
             if (request.getActive()) {
@@ -113,16 +100,9 @@ public class CollaborationController {
     public String listRequestedCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
-        List<Collaboration> collaborations = new LinkedList<>();
         Collaboration c;
 
-        for (Offer offer : offerDao.getPendingOffers(user)) {
-            if (offer.getActive()) {
-                c = collaborationDao.getPendingCollaborationFromOffer(offer.getId_O());
-                if (c != null && c.getStartDate() != null)
-                    collaborations.add(c);
-            }
-        }
+        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
 
         for (Request request : requestDao.getPendingRequests(user)) {
             if (request.getActive()) {
@@ -207,9 +187,6 @@ public class CollaborationController {
     @RequestMapping(value = "/accept/{id_C}")
     public String processAcceptSubmit(@PathVariable int id_C){
         collaborationDao.acceptCollaboration(id_C);
-        Collaboration collaboration = collaborationDao.getCollaboration(id_C);
-        offerDao.disableOffer(offerDao.getOffer(collaboration.getId_O()));
-        requestDao.disableRequest(requestDao.getRequest(collaboration.getId_R()));
         return "redirect:../list";
     }
 

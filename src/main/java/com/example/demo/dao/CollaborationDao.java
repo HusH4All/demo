@@ -63,19 +63,6 @@ public class CollaborationDao {
         }
     }
 
-    public Collaboration getCollaborationFromOffer(int id_o) {
-        try {
-            return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Collaboration WHERE id_o = ?",
-                    new CollaborationRowMapper(),
-                    id_o
-            );
-        }
-        catch(EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
     public Collaboration getCollaborationFromRequest(int id_r) {
         try {
             return jdbcTemplate.queryForObject(
@@ -89,15 +76,15 @@ public class CollaborationDao {
         }
     }
 
-    public Collaboration getPendingCollaborationFromOffer(int id_O) {
+    public List<Collaboration> getPendingCollaborationFromOffer(Student student) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM Collaboration WHERE id_O = ? and requesting != ?;",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting != o.id_o;",
                     new CollaborationRowMapper(),
-                    id_O, id_O
+                    student.getId_al()
             );
         }
         catch(EmptyResultDataAccessException e) {
-            return new Collaboration();
+            return new ArrayList<Collaboration>();
         }
     }
 
