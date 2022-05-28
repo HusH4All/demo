@@ -7,15 +7,15 @@ import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,18 +86,25 @@ public class OfferController {
     }
 
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
-    public String updateOffer(Model model, @PathVariable int id_O) {
+    public String updateOffer(Model model, @PathVariable int id_O, HttpSession session) {
         model.addAttribute("offer", offerDao.getOffer(id_O));
         model.addAttribute("skills", offerDao.getSkillTypes());
+        session.setAttribute("id_O", id_O);
         return "offer/update";
     }
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("offer") Offer offer,
-            BindingResult bindingResult){
+            BindingResult bindingResult, HttpSession session){
         if (bindingResult.hasErrors())
             return "offer/update";
+        int id_O = (int) session.getAttribute("id_O");
+        offer.setId_O(id_O);
+        LocalDate localDate = LocalDate.now();
+        if (offer.getEndDate().equals(localDate))
+            offerDao.disableOffer(offer);
+
         offerDao.updateOffer(offer);
         return "redirect:myoffers";
     }

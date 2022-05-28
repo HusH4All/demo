@@ -82,18 +82,23 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/update/{id_R}", method = RequestMethod.GET)
-    public String editRequest(Model model, @PathVariable int id_R) {
+    public String editRequest(Model model, @PathVariable int id_R, HttpSession session) {
         model.addAttribute("request", requestDao.getRequest(id_R));
+        model.addAttribute("skills", requestDao.getSkillTypes());
+        session.setAttribute("id_R", id_R);
         return "request/update";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("request") Request request,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors())
             return "request/update";
-
+        int id_R = (int) session.getAttribute("id_R");
+        request.setId_R(id_R);
+        if (!request.getEndDate().equals(requestDao.getRequest(id_R).getEndDate()))
+            requestDao.disableRequest(request);
         requestDao.updateRequest(request);
         return "redirect:list";
     }
