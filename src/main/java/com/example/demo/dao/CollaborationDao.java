@@ -78,7 +78,7 @@ public class CollaborationDao {
 
     public List<Collaboration> getPendingCollaborationFromOffer(Student student) {
         try {
-            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting != o.id_o;",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting != o.id_o",
                     new CollaborationRowMapper(),
                     student.getId_al()
             );
@@ -88,15 +88,15 @@ public class CollaborationDao {
         }
     }
 
-    public Collaboration getPendingCollaborationFromRequest(int id_R) {
+    public List<Collaboration> getPendingCollaborationFromRequest(Student student) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM Collaboration WHERE id_R = ? and requesting != ?;",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join requests as r using(id_r) WHERE r.id_al = ? and c.pending = true and requesting != r.id_r",
                     new CollaborationRowMapper(),
-                    id_R, id_R
+                    student.getId_al()
             );
         }
         catch(EmptyResultDataAccessException e) {
-            return new Collaboration();
+            return new ArrayList<Collaboration>();
         }
     }
 

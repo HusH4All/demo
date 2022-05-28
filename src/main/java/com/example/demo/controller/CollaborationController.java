@@ -50,12 +50,8 @@ public class CollaborationController {
         Collaboration c;
 
         List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
+        collaborations.addAll(collaborationDao.getPendingCollaborationFromRequest(user));
 
-        for (Request request : requestDao.getMyRequests(user)) {
-            c = collaborationDao.getCollaborationFromRequest(request.getId_R());
-            if (c != null && c.getStartDate() != null)
-                collaborations.add(c);
-        }
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && !collaboration.pending) {
                 Offer offer = offerDao.getOffer(collaboration.getId_O());
@@ -72,17 +68,9 @@ public class CollaborationController {
     public String listPendingCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
-        Collaboration c;
 
         List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
-
-        for (Request request : requestDao.getMyRequests(user)) {
-            if (request.getActive()) {
-                c = collaborationDao.getPendingCollaborationFromRequest(request.getId_R());
-                if (c != null && c.getStartDate() != null)
-                    collaborations.add(c);
-            }
-        }
+        collaborations.addAll(collaborationDao.getPendingCollaborationFromRequest(user));
 
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && collaboration.pending) {
@@ -100,17 +88,9 @@ public class CollaborationController {
     public String listRequestedCollaborations(Model model, HttpSession session) {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
-        Collaboration c;
 
         List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
-
-        for (Request request : requestDao.getPendingRequests(user)) {
-            if (request.getActive()) {
-                c = collaborationDao.getPendingCollaborationFromRequest(request.getId_R());
-                if (c != null && c.getStartDate() != null)
-                    collaborations.add(c);
-            }
-        }
+        collaborations.addAll(collaborationDao.getPendingCollaborationFromRequest(user));
 
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && collaboration.pending) {
