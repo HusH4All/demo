@@ -76,7 +76,7 @@ public class CollaborationDao {
 
     public List<Collaboration> getPendingCollaborationFromOffer(Student student) {
         try {
-            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting = o.id_o",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) join request as r on c.id_r = r.id_r join student as s on r.id_al = s.id_al WHERE o.id_al = ? and s.banned = false and c.pending = true and requesting = o.id_o",
                     new CollaborationRowMapper(),
                     student.getId_al()
             );
@@ -88,7 +88,7 @@ public class CollaborationDao {
 
     public List<Collaboration> getPendingCollaborationFromRequest(Student student) {
         try {
-            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) WHERE r.id_al = ? and c.pending = true and requesting = r.id_r",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) join offer as o on c.id_o = o.id_o join student as s on o.id_al = s.id_al WHERE r.id_al = ? and s.banned = false and c.pending = true and requesting = r.id_r",
                     new CollaborationRowMapper(),
                     student.getId_al()
             );
@@ -100,7 +100,7 @@ public class CollaborationDao {
 
     public List<Collaboration> getManagmentCollaborationFromOffer(Student student) {
         try {
-            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting != o.id_o",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) join request as r on c.id_r = r.id_r join student as s on r.id_al = s.id_al WHERE o.id_al = ? and s.banned = false and c.pending = true and requesting != o.id_o",
                     new CollaborationRowMapper(),
                     student.getId_al()
             );
@@ -112,7 +112,7 @@ public class CollaborationDao {
 
     public List<Collaboration> getManagmentCollaborationFromRequest(Student student) {
         try {
-            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) WHERE r.id_al = ? and c.pending = true and requesting != r.id_r",
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) join offer as o on c.id_o = o.id_o join student as s on o.id_al = s.id_al WHERE r.id_al = ? and s.banned = false and c.pending = true and requesting != r.id_r",
                     new CollaborationRowMapper(),
                     student.getId_al()
             );

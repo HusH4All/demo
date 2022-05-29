@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class Stadistics {
     public String name;
-    public float stat;
+    public float stat = 0;
     public String label;
     public String category;
 

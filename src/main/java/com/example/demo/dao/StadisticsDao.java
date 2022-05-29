@@ -20,7 +20,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from "+ table +" as x join skilltype as s using(id_s) group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -29,7 +32,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from "+ table +" as x join skilltype as s using(id_s) where x.active = true and s.active = true group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -38,7 +44,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from "+ table +" as x join student as s using(id_al) where x.active = true and s.banned = false group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -47,7 +56,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from "+ table +" as x join student as s using(id_al) where s.banned = false group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -56,7 +68,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select name, hours as stat from student order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -65,7 +80,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from collaboration as x join offer as o using(id_o) join skilltype as s using(id_s) where x.state = false group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -74,7 +92,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(x.*) as stat from collaboration as x join offer as o using(id_o) join skilltype as s using(id_s) group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -83,7 +104,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name, sum(score)/count(*) as stat from collaboration as c join offer as o using(id_o) join student as s using(id_al) where c.state = false group by s.name order by stat fetch first 1 rows only;",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 
@@ -104,7 +128,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(o.*) as stat from student as st join offer as o using(id_al) join skilltype as s using(id_s) where st.id_al = ? and s.active = true group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper(), id_al);
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
     public Stadistics bestRequestSkillActive(String id_al){
@@ -112,7 +139,10 @@ public class StadisticsDao {
             return jdbcTemplate.queryForObject("select s.name as name, count(r.*) as stat from student as st join request as r using(id_al) join skilltype as s using(id_s) where st.id_al = ? and s.active = true group by s.name order by stat desc fetch first 1 rows only",
                     new StadisticsRowMapper(), id_al);
         } catch (EmptyResultDataAccessException e){
-            return null;
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName("No data");
+            stadistics.setStat(0);
+            return stadistics;
         }
     }
 }
