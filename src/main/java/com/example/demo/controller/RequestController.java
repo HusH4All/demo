@@ -128,6 +128,6 @@ public class RequestController {
             return "login";
         }
         requestDao.disableRequest(id_R);
-        return "redirect:myrequests";
+        return "redirect:../myrequests";
     }
 }

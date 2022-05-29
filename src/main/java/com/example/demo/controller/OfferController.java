@@ -134,6 +134,6 @@ public class OfferController {
             return "login";
         }
         offerDao.disableOffer(id_O);
-        return "redirect:myoffers";
+        return "redirect:../myoffers";
     }
 }
