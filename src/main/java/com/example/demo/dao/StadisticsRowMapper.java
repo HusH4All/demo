@@ -10,7 +10,7 @@ public final class StadisticsRowMapper implements RowMapper<Stadistics> {
     public Stadistics mapRow(ResultSet rs, int rowNum) throws SQLException{
         Stadistics stadistics = new Stadistics();
         stadistics.setName(rs.getString("name"));
-        stadistics.setStat(rs.getInt("stat"));
+        stadistics.setStat(rs.getFloat("stat"));
         return stadistics;
     }
 }

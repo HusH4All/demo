@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class Stadistics {
     public String name;
-    public int stat;
+    public float stat;
     public String label;
     public String category;
 
@@ -17,11 +17,11 @@ public class Stadistics {
         this.name = name;
     }
 
-    public int getStat() {
+    public float getStat() {
         return stat;
     }
 
-    public void setStat(int stat) {
+    public void setStat(float stat) {
         this.stat = stat;
     }
 

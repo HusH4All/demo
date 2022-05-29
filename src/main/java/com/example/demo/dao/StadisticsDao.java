@@ -80,7 +80,7 @@ public class StadisticsDao {
 
     public Stadistics bestRatedStudent(){
         try{
-            return jdbcTemplate.queryForObject("select s.name, sum(score) as stat from collaboration as c join offer as o using(id_o) join student as s using(id_al) where c.state = false group by s.name order by stat fetch first 1 rows only;",
+            return jdbcTemplate.queryForObject("select s.name, sum(score)/count(*) as stat from collaboration as c join offer as o using(id_o) join student as s using(id_al) where c.state = false group by s.name order by stat fetch first 1 rows only;",
                     new StadisticsRowMapper());
         } catch (EmptyResultDataAccessException e){
             return null;
