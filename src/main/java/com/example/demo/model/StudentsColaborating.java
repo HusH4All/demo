@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import com.example.demo.enumerations.AssessmentScore;
-
 public class StudentsColaborating {
     private Student teacher;
     private Student student;

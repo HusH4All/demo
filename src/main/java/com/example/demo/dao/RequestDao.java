@@ -82,7 +82,7 @@ public class RequestDao {
     public List<Request> getSimilarRequests(int id_S, Student student) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Request WHERE id_S = ? and id_al != ?",
+                    "SELECT * FROM Request WHERE id_S = ? and active = true and id_al != ?",
                     new RequestRowMapper(),
                     id_S, student.getId_al()
             );

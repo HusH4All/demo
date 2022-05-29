@@ -75,7 +75,7 @@ public class OfferDao {
     public List<Offer> getSimilarOffers(int id_S, Student student) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Offer WHERE id_S = ? and id_al != ?",
+                    "SELECT * FROM Offer WHERE id_S = ? and active = true  and id_al != ?",
                     new OfferRowMapper(),
                     id_S, student.getId_al()
             );

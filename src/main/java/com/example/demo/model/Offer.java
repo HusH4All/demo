@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.example.demo.enumerations.SkillLevel;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

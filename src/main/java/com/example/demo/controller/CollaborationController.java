@@ -139,11 +139,11 @@ public class CollaborationController {
         return "redirect:../../collaboration/pending";
     }
 
-    @RequestMapping(value="/addSO/{id_o}", method= RequestMethod.POST)
+    @RequestMapping(value="/addSO/{id_o}")
     public String processAddSO(@PathVariable int id_o, HttpSession session) {
         Request request = (Request) session.getAttribute("request");
         Offer offer = offerDao.getOffer(id_o);
-        Collaboration collaboration = new Collaboration(offer.getId_O(), request.getId_R(), request.getStartDate(), request.getEndDate(), true, request.getId_R());
+        Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), request.getStartDate(), request.getEndDate(), true, request.getId_R());
         collaborationDao.addCollaboration(collaboration);
         requestDao.disableRequest(request.getId_R());
         return "redirect:../../collaboration/pending";
