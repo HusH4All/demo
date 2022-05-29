@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/skilltype")
 public class SkillTypeController {
@@ -66,18 +68,21 @@ public class SkillTypeController {
         return "redirect:list";
     }
     @RequestMapping(value="/update/{id_S}", method = RequestMethod.GET)
-    public String editSkillType(Model model, @PathVariable int id_S) {
+    public String editSkillType(Model model, @PathVariable int id_S, HttpSession session) {
         model.addAttribute("skilltype", skillTypeDao.getSkillType(id_S));
+        session.setAttribute("skilltype", skillTypeDao.getSkillType(id_S));
         return "skilltype/update";
     }
 
     @RequestMapping(value="/update", method = RequestMethod.POST)
     public String processUpdateSubmit(
             @ModelAttribute("skilltype") SkillType skillType,
-            BindingResult bindingResult) {
+            BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors())
             return "skilltype/update";
-        skillTypeDao.updateSkillType(skillType);
+        SkillType skillType1 = (SkillType) session.getAttribute("skilltype");
+        skillType1.setAll(skillType);
+        skillTypeDao.updateSkillType(skillType1);
         return "redirect:list";
     }
 

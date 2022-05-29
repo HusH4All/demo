@@ -31,10 +31,17 @@ public class OfferDao {
     }
 
 
-    public void disableOffer(Offer offer) {
+    public void disableOffer(int id_O) {
         jdbcTemplate.update(
                 "UPDATE Offer SET active = false WHERE id_O = ?",
-                offer.getId_O()
+                id_O
+        );
+    }
+
+    public void disableMyOffers(String id_al) {
+        jdbcTemplate.update(
+                "UPDATE Offer SET active = false WHERE id_al = ?",
+                id_al
         );
     }
 
@@ -42,13 +49,6 @@ public class OfferDao {
         jdbcTemplate.update(
                 "UPDATE Offer SET active = false WHERE id_s = ?",
                 id_s
-        );
-    }
-
-    public void deleteOffer(int id_O) {
-        jdbcTemplate.update(
-                "DELETE FROM Offer WHERE id_O = ?",
-                id_O
         );
     }
 
@@ -72,12 +72,12 @@ public class OfferDao {
         }
     }
 
-    public List<Offer> getSimilarOffers(int id_S) {
+    public List<Offer> getSimilarOffers(int id_S, Student student) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Offer WHERE id_S = ?",
+                    "SELECT * FROM Offer WHERE id_S = ? and id_al != ?",
                     new OfferRowMapper(),
-                    id_S
+                    id_S, student.getId_al()
             );
         }
         catch(EmptyResultDataAccessException e) {

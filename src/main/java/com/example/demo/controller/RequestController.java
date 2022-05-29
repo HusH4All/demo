@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.OfferDao;
 import com.example.demo.dao.RequestDao;
+import com.example.demo.dao.SkillTypeDao;
 import com.example.demo.model.Offer;
 import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +26,13 @@ import java.util.Map;
 public class RequestController {
 
     private RequestDao requestDao;
+
+    private SkillTypeDao skillTypeDao;
+
+    @Autowired
+    public void setSkillTypeDao(SkillTypeDao skillTypeDao) {
+        this.skillTypeDao = skillTypeDao;
+    }
 
     @Autowired
     public void setRequestDao(RequestDao requestDao) {
@@ -66,10 +76,15 @@ public class RequestController {
         return "request/similarRequests";
     }
 
+    @RequestMapping(value="/addfin")
+    public String addRequestFin() {
+        return "redirect:myrequests";
+    }
+
     @RequestMapping(value = "/add")
     public String addRequest(Model model) {
         model.addAttribute("request", new Request());
-        model.addAttribute("skills", requestDao.getSkillTypes());
+        model.addAttribute("skills", skillTypeDao.getSkillTypes());
         return "request/add";
     }
 
@@ -78,13 +93,15 @@ public class RequestController {
             @ModelAttribute("request") Request request,
             BindingResult bindingResult, HttpSession session) {
         requestDao.addRequest(request, (Student) session.getAttribute("student"));
-        return "redirect:myrequests";
+        request = requestDao.getLastRequest();
+        session.setAttribute("request", request);
+        return "redirect:../offer/similarOffers";
     }
 
     @RequestMapping(value = "/update/{id_R}", method = RequestMethod.GET)
     public String editRequest(Model model, @PathVariable int id_R, HttpSession session) {
         model.addAttribute("request", requestDao.getRequest(id_R));
-        model.addAttribute("skills", requestDao.getSkillTypes());
+        model.addAttribute("skills", skillTypeDao.getSkillTypes());
         session.setAttribute("id_R", id_R);
         return "request/update";
     }
@@ -97,15 +114,20 @@ public class RequestController {
             return "request/update";
         int id_R = (int) session.getAttribute("id_R");
         request.setId_R(id_R);
-        if (!request.getEndDate().equals(requestDao.getRequest(id_R).getEndDate()))
-            requestDao.disableRequest(request);
+        LocalDate localDate = LocalDate.now();
+        if (request.getEndDate().equals(localDate))
+            requestDao.disableRequest(request.getId_R());
         requestDao.updateRequest(request);
-        return "redirect:list";
+        return "redirect:myrequests";
     }
 
-    @RequestMapping(value = "/delete/{id_R}")
-    public String processDelete(@PathVariable int id_R) {
-        requestDao.deleteRequest(id_R);
-        return "redirect:../list";
+    @RequestMapping(value="/delete/{id_R}")
+    public String processDelete(@PathVariable int id_R, HttpSession session) {
+        if (session.getAttribute("student") == null) {
+            session.setAttribute("nextUrl", "/request/delete");
+            return "login";
+        }
+        requestDao.disableRequest(id_R);
+        return "redirect:myrequests";
     }
 }

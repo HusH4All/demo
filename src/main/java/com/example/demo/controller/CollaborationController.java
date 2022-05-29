@@ -135,18 +135,18 @@ public class CollaborationController {
         Request request = requestDao.getRequest(id_r);
         Collaboration collaboration = new Collaboration(request.getId_R(), offer.getId_O(), offer.getStartDate(), offer.getEndDate(), true, offer.getId_O());
         collaborationDao.addCollaboration(collaboration);
-        offerDao.disableOffer(offer);
+        offerDao.disableOffer(offer.getId_O());
         return "redirect:../../collaboration/pending";
     }
 
-    @RequestMapping(value="/addSO", method= RequestMethod.POST)
-    public String processAddSO(
-            @ModelAttribute("collaboration") Collaboration collaboration,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "collaboration/add";
+    @RequestMapping(value="/addSO/{id_o}", method= RequestMethod.POST)
+    public String processAddSO(@PathVariable int id_o, HttpSession session) {
+        Request request = (Request) session.getAttribute("request");
+        Offer offer = offerDao.getOffer(id_o);
+        Collaboration collaboration = new Collaboration(offer.getId_O(), request.getId_R(), request.getStartDate(), request.getEndDate(), true, request.getId_R());
         collaborationDao.addCollaboration(collaboration);
-        return "redirect:list";
+        requestDao.disableRequest(request.getId_R());
+        return "redirect:../../collaboration/pending";
     }
 
     @RequestMapping(value="/update/{id_C}", method = RequestMethod.GET)
@@ -174,7 +174,6 @@ public class CollaborationController {
         model.addAttribute("studentsColab", studentsColaborating);
         session.setAttribute("studentsColab", studentsColaborating);
         session.setAttribute("collaboration", collaboration);
-        System.out.println(collaboration.getRequesting());
         return "collaboration/close";
     }
 
@@ -186,7 +185,6 @@ public class CollaborationController {
         studentsColaborating.setTeacher(studentsColaborating1.getTeacher());
         studentsColaborating.setStudent(studentsColaborating1.getStudent());
         Collaboration collaboration = (Collaboration) session.getAttribute("collaboration");
-        System.out.println(collaboration.getRequesting());
         collaboration.setState(false);
         collaboration.setScore(studentsColaborating.getScore());
         collaborationDao.updateCollaboration(collaboration);
@@ -209,7 +207,7 @@ public class CollaborationController {
     public String processDeny(@PathVariable int id_C) {
         Collaboration collaboration = collaborationDao.getCollaboration(id_C);
         if (collaboration.getId_O() == collaboration.getRequesting())
-            offerDao.deleteOffer(collaboration.getId_O());
+            offerDao.disableOffer(collaboration.getId_O());
         else
             requestDao.deleteRequest(collaboration.getId_R());
         collaborationDao.deleteCollaboration(id_C);

@@ -31,10 +31,17 @@ public class RequestDao {
         );
     }
 
-    public void disableRequest(Request request) {
+    public void disableRequest(int id_R) {
         jdbcTemplate.update(
                 "UPDATE Request SET active = false WHERE id_R = ?",
-                request.getId_R()
+                id_R
+        );
+    }
+
+    public void disableMyRequests(String id_al) {
+        jdbcTemplate.update(
+                "UPDATE Request SET active = false WHERE id_al = ?",
+                id_al
         );
     }
 
@@ -54,8 +61,8 @@ public class RequestDao {
 
     public void updateRequest(Request request) {
         jdbcTemplate.update(
-                "UPDATE Request SET id_al = ?, id_S = ?, description = ?, StartDate = ?, EndDate = ? WHERE id_R = ?",
-                request.getId_al(), request.getId_S(), request.getDescription(), request.getStartDate(), request.getEndDate(), request.getId_R()
+                "UPDATE Request SET id_S = ?, description = ?, StartDate = ?, EndDate = ? WHERE id_R = ?",
+                request.getId_S(), request.getDescription(), request.getStartDate(), request.getEndDate(), request.getId_R()
         );
     }
 

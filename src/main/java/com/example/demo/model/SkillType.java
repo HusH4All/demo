@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 public class SkillType {
-    public String id_S;
+    public int id_S;
     public String name;
     public String level;
     public String description;
@@ -9,11 +9,11 @@ public class SkillType {
 
     public SkillType(){}
 
-    public String getId_S() {
+    public int getId_S() {
         return id_S;
     }
 
-    public void setId_S(String id_S) {
+    public void setId_S(int id_S) {
         this.id_S = id_S;
     }
 
@@ -44,6 +44,12 @@ public class SkillType {
     }
 
     public void setActive(boolean active) {this.Active = active;}
+
+    public void setAll(SkillType skillType){
+        this.name = skillType.getName();
+        this.description = skillType.getDescription();
+        this.level = skillType.getLevel();
+    }
 
     @Override
     public String toString() {

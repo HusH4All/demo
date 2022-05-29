@@ -1,44 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
     <title>Update Request</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+    <meta charset="UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
 </head>
+<div th:replace="fragments/header"></div>
 <body>
-<h2>Update Request</h2>
-<form action="#" th:action="@{/request/update}"
-      th:object="${request}" method="post">
-    <table>
-        <tr>
-            <td><label>ID Request</label></td>
-            <td><input type="text" th:field="*{id_R}" /></td>
-        </tr>
-        <tr>
-            <td><label>ID Al</label></td>
-            <td><input type="text" th:field="*{id_al}" /></td>
-        </tr>
-        <tr>
-            <td><label>ID Skill</label></td>
-            <td><input type="text" th:field="*{id_S}" /></td>
-        </tr>
-        <tr>
-            <td><label>Description</label></td>
-            <td><input type="text" th:field="*{description}" /></td>
-        </tr>
-        <tr>
-            <td><label>Start Date</label></td>
-            <td><input type="text" th:field="*{StartDate}" /></td>
-        </tr>
-        <tr>
-            <td><label>End Date</label></td>
-            <td><input type="text" th:field="*{EndDate}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Update Request" /></td>
-        </tr>
-    </table>
-</form>
+<div class="modal-dialog text-center">
+    <div class="col-sm-8 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="../../photos/addddd.png"/>
+            </div>
+            <form class="form-group col-12" action="#" th:action="@{/request/update}"
+                  th:object="${request}" method="post">
+
+                <div class="form-group">
+                    <select class="form-select" id="exampleSelect1" name="Skill" th:field="*{id_S}">
+                        <option value="0" > Select skill </option>
+                        <option th:each="skill : ${skills}" th:value="${skill.id_S}" th:text="${skill.name + ' (' + skill.level} + ')'"></option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="desc-group">
+                    <input type="text" class="form-control" placeholder="Description" th:field="*{description}"/>
+                </div>
+
+                <div class="form-group" id="times-group">
+                    <input type="date" class="form-control" placeholder="Start Date" th:field="*{StartDate}"/>
+                </div>
+
+                <div class="form-group" id="timee-group">
+                    <input type="date" class="form-control" placeholder="End Date" th:field="*{EndDate}"/>
+                </div>
+                <p>To disable the request change the end date to the current date</p>
+
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>Update Request</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

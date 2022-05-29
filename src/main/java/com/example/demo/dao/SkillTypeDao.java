@@ -42,8 +42,8 @@ public class SkillTypeDao {
 
     public void updateSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "UPDATE SkillType SET name = ?, description = ?, level = ?",
-                skill.getName(), skill.getDescription(), skill.getLevel()
+                "UPDATE SkillType SET name = ?, description = ?, level = ? WHERE id_S = ?",
+                skill.getName(), skill.getDescription(), skill.getLevel(), skill.getId_S()
         );
     }
 

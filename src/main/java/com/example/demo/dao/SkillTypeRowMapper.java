@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public final class SkillTypeRowMapper implements RowMapper<SkillType> {
     public SkillType mapRow(ResultSet rs, int rowNum) throws SQLException{
         SkillType skill = new SkillType();
-        skill.setId_S(rs.getString("id_s"));
+        skill.setId_S(rs.getInt("id_s"));
         skill.setName(rs.getString("name"));
         skill.setLevel(rs.getString("level"));
         skill.setDescription(rs.getString("Description"));

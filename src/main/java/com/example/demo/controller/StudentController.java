@@ -123,10 +123,8 @@ public class StudentController {
             @ModelAttribute("student") Student student) {
         studentDao.banStudent(student.getId_al());
         studentDao.setMsg(student);
-        for (Offer offer : offerDao.getMyOffers(student))
-            offerDao.disableOffer(offer);
-        for (Request request : requestDao.getMyRequests(student))
-            requestDao.disableRequest(request);
+        offerDao.disableMyOffers(student.getId_al());
+        requestDao.disableMyRequests(student.getId_al());
         return "redirect:/student/ban";
     }
 

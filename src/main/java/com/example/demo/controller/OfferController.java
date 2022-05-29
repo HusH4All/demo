@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dao.OfferDao;
 import com.example.demo.dao.SkillTypeDao;
 import com.example.demo.model.Offer;
+import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
 import com.example.demo.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,16 @@ public class OfferController {
 
     private OfferDao offerDao;
 
+    private SkillTypeDao skillTypeDao;
+
     @Autowired
     public void setOfferDao(OfferDao offerDao) {
         this.offerDao = offerDao;
+    }
+
+    @Autowired
+    public void setSkillTypeDao(SkillTypeDao skillTypeDao) {
+        this.skillTypeDao = skillTypeDao;
     }
 
     @RequestMapping("/list")
@@ -61,6 +69,16 @@ public class OfferController {
         return "offer/list";
     }
 
+    @RequestMapping("/similarOffers")
+    public String listSimilarOffers(HttpSession session, Model model) {
+        Map<Offer, SkillType> offerSkillTypeMap = new HashMap<>();
+        Request request = (Request) session.getAttribute("request");
+        for (Offer offer : offerDao.getSimilarOffers(request.getId_S(), (Student) session.getAttribute("student"))) offerSkillTypeMap.put(offer, offerDao.getSkill(offerDao.getOffer(offer.getId_O()).getId_S()));
+
+        model.addAttribute("offers", offerSkillTypeMap);
+        return "offer/similarOffers";
+    }
+
     @RequestMapping(value="/addfin")
     public String addOfferFin() {
         return "redirect:myoffers";
@@ -69,7 +87,7 @@ public class OfferController {
     @RequestMapping(value="/add")
     public String addOffer(Model model) {
         model.addAttribute("offer", new Offer());
-        model.addAttribute("skills", offerDao.getSkillTypes());
+        model.addAttribute("skills", skillTypeDao.getSkillTypes());
         return "offer/add";
     }
 
@@ -88,7 +106,7 @@ public class OfferController {
     @RequestMapping(value="/update/{id_O}", method = RequestMethod.GET)
     public String updateOffer(Model model, @PathVariable int id_O, HttpSession session) {
         model.addAttribute("offer", offerDao.getOffer(id_O));
-        model.addAttribute("skills", offerDao.getSkillTypes());
+        model.addAttribute("skills", skillTypeDao.getSkillTypes());
         session.setAttribute("id_O", id_O);
         return "offer/update";
     }
@@ -103,7 +121,7 @@ public class OfferController {
         offer.setId_O(id_O);
         LocalDate localDate = LocalDate.now();
         if (offer.getEndDate().equals(localDate))
-            offerDao.disableOffer(offer);
+            offerDao.disableOffer(offer.getId_O());
 
         offerDao.updateOffer(offer);
         return "redirect:myoffers";
@@ -115,7 +133,7 @@ public class OfferController {
             session.setAttribute("nextUrl", "/offer/delete");
             return "login";
         }
-        offerDao.deleteOffer(id_O);
-        return "redirect:../list";
+        offerDao.disableOffer(id_O);
+        return "redirect:myoffers";
     }
 }

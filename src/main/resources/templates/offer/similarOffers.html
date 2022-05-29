@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}"/>
-    <title>Similar Requests</title>
+    <title>Similar Offers</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
@@ -79,44 +79,44 @@
 <div class="container">
     <div class="main-body">
         <div style="margin-bottom: 20px; margin-top: 10px" class="text-center">
-            <a role="button" href="/offer/addfin" class="btn btn-primary btn-lg shadow-nice" th:onclick="return alert('Mail sent to all the students interested')">Continue adding the Offer</a>
-            </div>
+            <a role="button" href="/request/addfin" class="btn btn-primary btn-lg shadow-nice" th:onclick="return alert('Mail sent to all the students interested')">Continue adding the Request</a>
         </div>
-        <div class="row gutters-sm">
-            <div class="md-5 mb-3">
-                <div class="wrapper">
-                    <table>
-                        <tbody>
-                            <tr th:each="request: ${requests}" class="separar">
-                                <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
-                                    <div class="card-header" th:text="${request['value'].level}"></div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            Skill requested :
-                                            <small style="opacity: 0.7" th:text="${request['value'].name}"></small>
-                                        </h5>
-                                        <h6 class="card-text">
-                                            Description:
-                                            <small style="opacity: 0.7" th:text="${request['key'].description}"></small>
-                                        </h6>
-                                        <h7 class="card-text">
-                                            From:
-                                            <small style="opacity: 0.7" th:text="${request['key'].StartDate}"></small>
-                                            To:
-                                            <small style="opacity: 0.7" th:text="${request['key'].EndDate}"></small>
-                                        </h7>
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Basic example" th:object="${session}">
-                                        <a th:if="*{student != null} and *{student.id_al} != ${request['key'].id_al}" th:href="@{/collaboration/addSR/{id_r}(id_r = ${request['key'].id_R})}" th:onclick="return alert('Mail sent to ' + [[${request['key'].id_al}]])" role="button" class="btn btn-primary shadow-nice">Collaborate</a>
-                                    </div>
-                                </div>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    </div>
+    <div class="row gutters-sm">
+        <div class="md-5 mb-3">
+            <div class="wrapper">
+                <table>
+                    <tbody>
+                    <tr th:each="offer: ${offers}" class="separar">
+                        <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+                            <div class="card-header" th:text="${offer['value'].level}"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    Skill offered :
+                                    <small style="opacity: 0.7" th:text="${offer['value'].name}"></small>
+                                </h5>
+                                <h6 class="card-text">
+                                    Description:
+                                    <small style="opacity: 0.7" th:text="${offer['key'].description}"></small>
+                                </h6>
+                                <h7 class="card-text">
+                                    From:
+                                    <small style="opacity: 0.7" th:text="${offer['key'].StartDate}"></small>
+                                    To:
+                                    <small style="opacity: 0.7" th:text="${offer['key'].EndDate}"></small>
+                                </h7>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Basic example" th:object="${session}">
+                                <a th:if="*{student != null} and *{student.id_al} != ${offer['key'].id_al}" th:href="@{/collaboration/addSO/{id_o}(id_o = ${offer['key'].id_O})}" th:onclick="return alert('Mail sent to ' + [[${offer['key'].id_al}]])" role="button" class="btn btn-primary shadow-nice">Collaborate</a>
+                            </div>
+                        </div>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
