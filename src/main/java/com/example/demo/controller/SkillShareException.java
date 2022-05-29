@@ -2,8 +2,8 @@ package com.example.demo.controller;
 
 public class SkillShareException extends RuntimeException {
 
-    String message;       // Missatge per mostrar a la vista
-    String errorName;     // Identificador de l’error
+    String message;
+    String errorName;
 
     public SkillShareException(String message, String errorName)
     {

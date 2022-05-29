@@ -1,13 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.CollaborationDao;
-import com.example.demo.dao.OfferDao;
-import com.example.demo.dao.RequestDao;
-import com.example.demo.dao.StudentDao;
-import com.example.demo.model.Collaboration;
-import com.example.demo.model.Offer;
-import com.example.demo.model.Request;
-import com.example.demo.model.Student;
+import com.example.demo.dao.*;
+import com.example.demo.model.*;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/student")
@@ -27,7 +23,7 @@ public class StudentController {
     private StudentDao studentDao;
     private OfferDao offerDao;
     private RequestDao requestDao;
-    private CollaborationDao collaborationDao;
+    private StadisticsDao stadisticsDao;
 
     @Autowired
     public void setStudentDao(StudentDao studentDao) {
@@ -45,9 +41,7 @@ public class StudentController {
     }
 
     @Autowired
-    public void setCollaborationDao(CollaborationDao collaborationDao) {
-        this.collaborationDao = collaborationDao;
-    }
+    public void setStadisticsDao(StadisticsDao stadisticsDao) {this.stadisticsDao = stadisticsDao;}
 
     @RequestMapping("/profile")
     public String profile(HttpSession session, Model model) {
@@ -104,6 +98,72 @@ public class StudentController {
         studentDao.disableStudent(id_al);
         session.invalidate();
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/stadistics")
+    public String processStadistics(Model model){
+        List<Stadistics> stadistics = new LinkedList<>();
+        Stadistics stat = stadisticsDao.bestSkillActive("offer");
+        stat.setCategory("Best Skill of active Offers");
+        stat.setLabel("Total Offers: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestSkillActive("request");
+        stat.setCategory("Best Skill of active Requests");
+        stat.setLabel("Total Requests: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestSkillAllTime("offer");
+        stat.setCategory("Best Skill of all Offers");
+        stat.setLabel("Total Offers: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestSkillAllTime("request");
+        stat.setCategory("Best Skill of all Requests");
+        stat.setLabel("Total Requests");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestStudent("offer");
+        stat.setCategory("Student with the most active Offers");
+        stat.setLabel("Total Offers: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestStudent("request");
+        stat.setCategory("Student with the most active Requests");
+        stat.setLabel("Total Requests");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestStudentAllTime("offer");
+        stat.setCategory("Student with the most Offers");
+        stat.setLabel("Total Offers");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestStudentAllTime("request");
+        stat.setCategory("Student with the most Requests");
+        stat.setLabel("Total Requests");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.studentWithMoreHours();
+        stat.setCategory("Student that teached the most");
+        stat.setLabel("Total Hours: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.mostSkillCollaboratedAllTime();
+        stat.setCategory("Best Skill in Collaborations");
+        stat.setLabel("Total Collaborations: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.mostSkillClosedCollaboration();
+        stat.setCategory("Best Skill in closed Collaborations");
+        stat.setLabel("Total Collaborations: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestRatedStudent();
+        stat.setCategory("Best rated student");
+        stat.setLabel("Total Score: ");
+        stadistics.add(stat);
+        model.addAttribute("stadistics", stadistics);
+        return "student/stadistics";
     }
 
     @RequestMapping(value = "/ban")

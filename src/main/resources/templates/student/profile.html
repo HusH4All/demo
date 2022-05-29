@@ -68,17 +68,6 @@
     </style>
 </head>
 <div th:replace="fragments/header"></div>
-<script type="text/javascript">
-    function ConfirmDisable(){
-        var answer = confirm("Are you sure you want to disable this account?");
-        if(answer == true){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-</script>
 <body>
 <div class="container">
     <div class="main-body">
@@ -103,7 +92,7 @@
                             <div class="mt-3">
                                 <a class="btn btn-primary" href="/skilltype/list">View Skills</a>
                                 <a class="btn btn-primary" href="/student/ban">Ban Student</a>
-                                <a class="btn btn-primary">Consult Stadistics</a>
+                                <a class="btn btn-primary" href="/student/stadistics">Consult Stadistics</a>
                             </div>
                         </div>
                     </div>
