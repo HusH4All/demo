@@ -108,7 +108,7 @@
                                 </div>
                                 <div th:if="${session.student.id_al} == ${collaboration['value'].student.id_al}" class="btn-group" role="group" aria-label="Basic example">
                                     <a role="button" class="btn btn-primary shadow-nice">Edit</a>
-                                    <a role="button" class="btn btn-primary shadow-nice" th:href="@{/collaboration/close/{id_c}(id_c = ${collaboration['key'].id_C})}">Close</a>
+                                    <a role="button" class="btn btn-primary shadow-nice" th:href="@{/collaboration/close/{id_c}(id_c = ${collaboration['key'].id_C})}" onclick="return confirm(Are you sure you want to close this collaboration?);">Close</a>
                                 </div>
                                 <div th:if="${session.student.id_al} != ${collaboration['value'].student.id_al}" class="btn-group" role="group" aria-label="Basic example">
                                     <a role="button" class="btn btn-primary shadow-nice">Edit</a>

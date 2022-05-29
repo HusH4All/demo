@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
-          th:href="@{/css/bootstrap.min.css}"/>
-    <title>Login</title>
-    <meta charset="UTF-8"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
-</head>
-<div th:replace="fragments/header"></div>
-<body>
-<div class="modal-dialog text-center">
-    <div class="col-sm-8 main-section">
-        <div class="modal-content">
-            <div class="col-12 user-img">
-                <img src="https://www.pngkey.com/png/full/208-2084656_third-party-icon-icon.png"/>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}"/>
+        <title>Login</title>
+        <meta charset="UTF-8"/>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
+    </head>
+    <div th:replace="fragments/header"></div>
+    <body>
+        <div class="modal-dialog text-center">
+            <div class="col-sm-8 main-section">
+                <div class="modal-content">
+                    <div class="col-12 user-img">
+                        <img src="https://www.pngkey.com/png/full/208-2084656_third-party-icon-icon.png"/>
+                    </div>
+                    <form class="form-group col-12" action="#" th:action="@{/login}"
+                          th:object="${student}" method="post">
+                        <div th:unless="${#fields.hasErrors('id_al')}" class="form-group" id="user-group">
+                            <input type="text" class="form-control" placeholder="Username" th:field="*{id_al}">
+                        </div>
+                        <div th:if="${#fields.hasErrors('id_al')}" class="form-group has-danger" id="usererror-group">
+                            <input type="text" class="form-control is-invalid" placeholder="Username" th:field="*{id_al}"/>
+                            <div class="invalid-feedback" th:errors="*{id_al}"></div>
+                        </div>
+                        <div th:unless="${#fields.hasErrors('password')}" class="form-group" id="pass-group">
+                            <input type="password" class="form-control" placeholder="Password" th:field="*{password}"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('password')}" class="form-group has-danger" id="passerror-group">
+                            <input type="password" class="form-control is-invalid" placeholder="Password" th:field="*{password}"/>
+                            <div class="invalid-feedback" th:errors="*{password}"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Log In</button>
+                    </form>
+                </div>
             </div>
-            <form class="form-group col-12" action="#" th:action="@{/login}"
-                  th:object="${student}" method="post">
-                <div th:unless="${#fields.hasErrors('id_al')}" class="form-group" id="user-group">
-                    <input type="text" class="form-control" placeholder="Username" th:field="*{id_al}">
-                </div>
-                <div th:if="${#fields.hasErrors('id_al')}" class="form-group has-danger" id="usererror-group">
-                    <input type="text" class="form-control is-invalid" placeholder="Username" th:field="*{id_al}"/>
-                    <div class="invalid-feedback" th:errors="*{id_al}"></div>
-                </div>
-                <div th:unless="${#fields.hasErrors('password')}" class="form-group" id="pass-group">
-                    <input type="password" class="form-control" placeholder="Password" th:field="*{password}"/>
-                </div>
-                <div th:if="${#fields.hasErrors('password')}" class="form-group has-danger" id="passerror-group">
-                    <input type="password" class="form-control is-invalid" placeholder="Password" th:field="*{password}"/>
-                    <div class="invalid-feedback" th:errors="*{password}"></div>
-                </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Log In</button>
-            </form>
         </div>
-    </div>
-</div>
-</body>
+    </body>
 </html>

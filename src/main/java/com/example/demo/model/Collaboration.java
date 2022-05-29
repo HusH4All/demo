@@ -9,6 +9,7 @@ public class Collaboration {
     public java.time.LocalDate StartDate;
     public java.time.LocalDate EndDate;
     public Boolean state = true;
+    public int hours;
     public int score;
     public Boolean pending = true;
     public int requesting;
@@ -59,6 +60,14 @@ public class Collaboration {
     public int getRequesting() {return requesting;}
 
     public void setRequesting(int requesting) {this.requesting = requesting;}
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
 
     @Override
     public String toString() {

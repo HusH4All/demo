@@ -107,8 +107,8 @@
                                                 </h7>
                                             </div>
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a role="button" th:href="@{/collaboration/accept/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice">Accept</a>
-                                                <a role="button" th:href="@{/collaboration/deny/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice">Deny</a>
+                                                <a role="button" th:href="@{/collaboration/accept/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice" onclick="return confirm(Are you sure you want to accept this collaboration?);">Accept</a>
+                                                <a role="button" th:href="@{/collaboration/deny/{id_C}(id_C = ${collaboration['key'].id_C})}" class="btn btn-primary shadow-nice" onclick="return confirm(Are you sure you want to deny this collaboration?);">Deny</a>
                                             </div>
                                         </div>
                                     </tr>

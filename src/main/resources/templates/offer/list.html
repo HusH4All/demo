@@ -107,7 +107,7 @@
                                         </div>
                                         <div th:if="${session.student != null} and ${session.student.id_al} == ${offer['key'].id_al} and ${offer['key'].active}" class="btn-group" role="group" aria-label="Basic example">
                                             <a role="button" th:href="@{/offer/update/{id_o}(id_o = ${offer['key'].id_O})}" class="btn btn-primary shadow-nice">Edit</a>
-                                            <a role="button" th:href="@{/offer/delete/{id_o}(id_o = ${offer['key'].id_O})}" class="btn btn-primary shadow-nice">Delete</a>
+                                            <a role="button" th:href="@{/offer/delete/{id_o}(id_o = ${offer['key'].id_O})}" class="btn btn-primary shadow-nice" onclick="return confirm(Are you sure you want to delete this offer?);">Delete</a>
                                         </div>
                                     </div>
                                 </tr>

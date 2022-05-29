@@ -187,11 +187,12 @@ public class CollaborationController {
         Collaboration collaboration = (Collaboration) session.getAttribute("collaboration");
         collaboration.setState(false);
         collaboration.setScore(studentsColaborating.getScore());
+        collaboration.setHours(studentsColaborating.getHours());
         collaborationDao.updateCollaboration(collaboration);
         Student teacher = studentDao.getStudent(studentsColaborating.getTeacher().getId_al());
         teacher.setHours(studentsColaborating.getHours() + teacher.getHours());
         Student student = studentDao.getStudent(studentsColaborating.getStudent().getId_al());
-        student.setHours(studentsColaborating.getHours() + student.getHours());
+        student.setHours(student.getHours() - studentsColaborating.getHours());
         studentDao.setHours(teacher);
         studentDao.setHours(student);
         return "redirect:list";
