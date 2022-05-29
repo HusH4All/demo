@@ -86,4 +86,33 @@ public class StadisticsDao {
             return null;
         }
     }
+
+    public Stadistics rate(String name){
+        try {
+            return jdbcTemplate.queryForObject("select s.name, sum(score)/count(*) as stat from collaboration as c join offer as o using(id_o) join student as s using(id_al) where c.state = false and s.name = ? group by s.name order by stat fetch first 1 rows only;",
+                new StadisticsRowMapper(), name);
+        } catch (EmptyResultDataAccessException e){
+            Stadistics stadistics = new Stadistics();
+            stadistics.setName(name);
+            stadistics.setStat(0);
+            return stadistics;
+        }
+    }
+
+    public Stadistics bestOfferSkillActive(String id_al){
+        try{
+            return jdbcTemplate.queryForObject("select s.name as name, count(o.*) as stat from student as st join offer as o using(id_al) join skilltype as s using(id_s) where st.id_al = ? and s.active = true group by s.name order by stat desc fetch first 1 rows only",
+                    new StadisticsRowMapper(), id_al);
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+    public Stadistics bestRequestSkillActive(String id_al){
+        try{
+            return jdbcTemplate.queryForObject("select s.name as name, count(r.*) as stat from student as st join request as r using(id_al) join skilltype as s using(id_s) where st.id_al = ? and s.active = true group by s.name order by stat desc fetch first 1 rows only",
+                    new StadisticsRowMapper(), id_al);
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
 }

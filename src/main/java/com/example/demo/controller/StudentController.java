@@ -51,6 +51,23 @@ public class StudentController {
             return "login";
         }
         Student student = (Student) session.getAttribute("student");
+        List<Stadistics> stadistics = new LinkedList<>();
+        Stadistics stat;
+        stat = stadisticsDao.bestOfferSkillActive(student.getId_al());
+        stat.setCategory("Most skill offered");
+        stat.setLabel("Total Offers: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.bestRequestSkillActive(student.getId_al());
+        stat.setCategory("Most skill requested");
+        stat.setLabel("Total Requests: ");
+        stadistics.add(stat);
+
+        stat = stadisticsDao.rate(student.getName());
+        stat.setCategory("Total Rate");
+        stat.setLabel("Score: ");
+        stadistics.add(stat);
+        model.addAttribute("stadistics", stadistics);
         model.addAttribute("student", studentDao.getStudent(student.getId_al()));
         return "student/profile";
     }

@@ -65,6 +65,11 @@
         .shadow-nice {
               box-shadow: 0px 0px 25px #593196;
         }
+        .wrapper {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              grid-gap: 10px;
+        }
     </style>
 </head>
 <div th:replace="fragments/header"></div>
@@ -132,8 +137,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="row gutters-sm">
+                    <div class="md-5 mb-3">
+                        <div class="wrapper">
+                            <table>
+                                <tbody>
+                                <tr th:each="stat: ${stadistics}" class="separar">
+                                    <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+                                        <div class="card-header" th:text="${stat.category}"></div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                Name:
+                                                <small style="opacity: 0.7" th:text="${stat.name}"></small>
+                                            </h5>
+                                            <h6 class="card-text">
+                                                <a  th:text="${stat.label}"></a>
+                                                <small style="opacity: 0.7" th:text="${stat.stat} + '/5'"></small>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row gutters-sm"></div>
+            </div>
         </div>
     </div>
 </div>
