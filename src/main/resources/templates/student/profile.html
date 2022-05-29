@@ -139,7 +139,7 @@
                             <div class="col-sm-12"  align="center">
                                 <a class="btn btn-primary" th:href="@{/student/update/{id_al}(id_al=${student.id_al})}">Edit</a>
                                 <a th:if="*{!student.active} and *{!student.SKP}" class="btn btn-success" href="/student/enable" th:href="@{/student/enable/{id_al}(id_al=${student.id_al})}">Enable</a>
-                                <a th:if="*{student.active} and *{!student.SKP}" class="btn btn-danger" href="/student/disable" th:href="@{/student/disable/{id_al}(id_al=${student.id_al})}" onclick="return ConfirmDisable()">Disable</a>
+                                <a th:if="*{student.active} and *{!student.SKP}" class="btn btn-danger" href="/student/disable" th:href="@{/student/disable/{id_al}(id_al=${student.id_al})}" onclick="return confirm(Are you sure you want to disable this account?);">Disable</a>
                             </div>
                         </div>
                     </div>

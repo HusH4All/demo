@@ -45,9 +45,9 @@ public class CollaborationDao {
 
     public void updateCollaboration(Collaboration collaboration) {
         jdbcTemplate.update(
-                "UPDATE Collaboration SET id_C = ?, id_R = ?, id_O = ?, StartDate = ?, EndDate = ? WHERE score = ?",
-                collaboration.getId_C(), collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.getScore()
-        );
+                "UPDATE Collaboration SET id_R = ?, id_O = ?, StartDate = ?, EndDate = ?, score = ?, state = ?, pending = ?, requesting = ? WHERE id_C = ?",
+                collaboration.getId_R(), collaboration.getId_O(), collaboration.getStartDate(), collaboration.getEndDate(), collaboration.getScore(), collaboration.getState(),collaboration.getPending(), collaboration.getRequesting(), collaboration.getId_C()
+                );
     }
 
     public Collaboration getCollaboration(int id_C) {
@@ -63,16 +63,14 @@ public class CollaborationDao {
         }
     }
 
-    public Collaboration getCollaborationFromRequest(int id_r) {
+    public List<Collaboration> getCollaborations() {
         try {
-            return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Collaboration WHERE id_r = ?",
-                    new CollaborationRowMapper(),
-                    id_r
+            return jdbcTemplate.query("SELECT * FROM Collaboration",
+                    new CollaborationRowMapper()
             );
         }
         catch(EmptyResultDataAccessException e) {
-            return null;
+            return new ArrayList<Collaboration>();
         }
     }
 
@@ -89,6 +87,30 @@ public class CollaborationDao {
     }
 
     public List<Collaboration> getPendingCollaborationFromRequest(Student student) {
+        try {
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) WHERE r.id_al = ? and c.pending = true and requesting = r.id_r",
+                    new CollaborationRowMapper(),
+                    student.getId_al()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Collaboration>();
+        }
+    }
+
+    public List<Collaboration> getManagmentCollaborationFromOffer(Student student) {
+        try {
+            return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join offer as o using(id_o) WHERE o.id_al = ? and c.pending = true and requesting = o.id_o",
+                    new CollaborationRowMapper(),
+                    student.getId_al()
+            );
+        }
+        catch(EmptyResultDataAccessException e) {
+            return new ArrayList<Collaboration>();
+        }
+    }
+
+    public List<Collaboration> getManagmentCollaborationFromRequest(Student student) {
         try {
             return jdbcTemplate.query("SELECT c.* FROM Collaboration as c join request as r using(id_r) WHERE r.id_al = ? and c.pending = true and requesting != r.id_r",
                     new CollaborationRowMapper(),

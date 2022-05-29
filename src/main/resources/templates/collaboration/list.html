@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a role="button" class="btn btn-primary shadow-nice">Edit</a>
-                                    <a role="button" class="btn btn-primary shadow-nice">Close</a>
+                                    <a role="button" class="btn btn-primary shadow-nice" th:href="@{/collaboration/close/{id_c}(id_c = ${collaboration['key'].id_C})}">Close</a>
                                 </div>
                             </div>
                         </tr>

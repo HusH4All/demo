@@ -7,7 +7,6 @@
         <meta charset="UTF-8" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css"/>
-        <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
         <style>
             body{
             margin-top:20px;
@@ -109,9 +108,6 @@
                                         <div th:if="${session.student != null} and ${session.student.id_al} == ${request['key'].id_al} and ${request['key'].active}" class="btn-group" role="group" aria-label="Basic example">
                                             <a role="button" href="/request/update" class="btn btn-primary shadow-nice">Edit</a>
                                             <a role="button" class="btn btn-primary shadow-nice">Delete</a>
-                                        </div>
-                                        <div th:if="${session.student != null} and ${session.student.id_al} == ${request['key'].id_al} and !${request['key'].active}" class="btn-group" role="group" aria-label="Basic example">
-                                            <a role="button" class="btn btn-primary shadow-nice">Pending</a>
                                         </div>
                                     </div>
                                 </tr>

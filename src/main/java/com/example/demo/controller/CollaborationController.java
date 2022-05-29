@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.CollaborationDao;
-import com.example.demo.dao.OfferDao;
-import com.example.demo.dao.RequestDao;
-import com.example.demo.dao.SkillTypeDao;
+import com.example.demo.dao.*;
 import com.example.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +24,7 @@ public class CollaborationController {
     private CollaborationDao collaborationDao;
     private RequestDao requestDao;
     private OfferDao offerDao;
+    private StudentDao studentDao;
 
     @Autowired
     public void setCollaborationDao(CollaborationDao collaborationDao) {
@@ -42,6 +40,9 @@ public class CollaborationController {
     public void setOfferDao(OfferDao offerDao) {
         this.offerDao = offerDao;
     }
+
+    @Autowired
+    public void setStudentDao(StudentDao studentDao){ this.studentDao = studentDao;}
 
     @RequestMapping("/list")
     public String listCollaborations(Model model, HttpSession session) {
@@ -69,8 +70,8 @@ public class CollaborationController {
         Student user = (Student) session.getAttribute("student");
         Map<Collaboration, StudentsColaborating> collaborationMap = new HashMap<>();
 
-        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getPendingCollaborationFromOffer(user));
-        collaborations.addAll(collaborationDao.getPendingCollaborationFromRequest(user));
+        List<Collaboration> collaborations = new LinkedList<>(collaborationDao.getManagmentCollaborationFromOffer(user));
+        collaborations.addAll(collaborationDao.getManagmentCollaborationFromRequest(user));
 
         for (Collaboration collaboration : collaborations) {
             if (collaboration != null && collaboration.pending) {
@@ -161,6 +162,40 @@ public class CollaborationController {
         if (bindingResult.hasErrors())
             return "collaboration/update";
         collaborationDao.updateCollaboration(collaboration);
+        return "redirect:list";
+    }
+
+    @RequestMapping(value="/close/{id_C}", method = RequestMethod.GET)
+    public String closeCollaboration(Model model, @PathVariable int id_C, HttpSession session){
+        Collaboration collaboration = collaborationDao.getCollaboration(id_C);
+        Offer offer = offerDao.getOffer(collaboration.getId_O());
+        Request request = requestDao.getRequest(collaboration.getId_R());
+        StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
+        model.addAttribute("studentsColab", studentsColaborating);
+        session.setAttribute("studentsColab", studentsColaborating);
+        session.setAttribute("collaboration", collaboration);
+        System.out.println(collaboration.getRequesting());
+        return "collaboration/close";
+    }
+
+    @RequestMapping(value="/close", method = RequestMethod.POST)
+    public String proccessCloseSubmit(@ModelAttribute("studentsCollab") StudentsColaborating studentsColaborating, BindingResult bindingResult, HttpSession session){
+        if (bindingResult.hasErrors())
+            return "collaboration/close";
+        StudentsColaborating studentsColaborating1 = (StudentsColaborating) session.getAttribute("studentsColab");
+        studentsColaborating.setTeacher(studentsColaborating1.getTeacher());
+        studentsColaborating.setStudent(studentsColaborating1.getStudent());
+        Collaboration collaboration = (Collaboration) session.getAttribute("collaboration");
+        System.out.println(collaboration.getRequesting());
+        collaboration.setState(false);
+        collaboration.setScore(studentsColaborating.getScore());
+        collaborationDao.updateCollaboration(collaboration);
+        Student teacher = studentDao.getStudent(studentsColaborating.getTeacher().getId_al());
+        teacher.setHours(studentsColaborating.getHours() + teacher.getHours());
+        Student student = studentDao.getStudent(studentsColaborating.getStudent().getId_al());
+        student.setHours(studentsColaborating.getHours() + student.getHours());
+        studentDao.setHours(teacher);
+        studentDao.setHours(student);
         return "redirect:list";
     }
 

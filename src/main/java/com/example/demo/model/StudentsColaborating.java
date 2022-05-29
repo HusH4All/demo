@@ -1,9 +1,13 @@
 package com.example.demo.model;
 
+import com.example.demo.enumerations.AssessmentScore;
+
 public class StudentsColaborating {
     private Student teacher;
     private Student student;
     private SkillType skillType;
+    private int score;
+    private int hours;
 
     public StudentsColaborating() {
     }
@@ -36,5 +40,21 @@ public class StudentsColaborating {
 
     public void setSkillType(SkillType skillType) {
         this.skillType = skillType;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
     }
 }

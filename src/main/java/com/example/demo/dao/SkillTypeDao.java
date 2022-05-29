@@ -29,20 +29,20 @@ public class SkillTypeDao {
 
     public void deleteSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "DELETE FROM SkillType WHERE id_S = ?",
+                "UPDATE SkillType SET active = false WHERE id_S = ?",
                 skill.getId_S()
         );
     }
-    public void deleteSkilType(String id_S) {
+    public void deleteSkilType(int id_S) {
         jdbcTemplate.update(
-                "DELETE FROM SkillType WHERE id_S = ?",
+                "UPDATE SkillType SET active = false WHERE id_S = ?",
                 id_S
         );
     }
 
     public void updateSkillType(SkillType skill) {
         jdbcTemplate.update(
-                "UPDATE SkillTypeSET name = ?, description = ?, level = ?",
+                "UPDATE SkillType SET name = ?, description = ?, level = ?",
                 skill.getName(), skill.getDescription(), skill.getLevel()
         );
     }
@@ -62,7 +62,7 @@ public class SkillTypeDao {
 
     public List<SkillType> getSkillTypes() {
         try {
-            return jdbcTemplate.query("SELECT distinct * FROM SkillType",
+            return jdbcTemplate.query("SELECT * FROM SkillType Where active = true order by name, level",
                     new SkillTypeRowMapper());
         }
         catch(EmptyResultDataAccessException e) {

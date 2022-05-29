@@ -94,6 +94,13 @@ public class StudentDao {
         );
     }
 
+    public void setHours(Student student){
+        jdbcTemplate.update(
+                "UPDATE Student SET hours = ? WHERE id_al = ?",
+                student.getHours(), student.getId_al()
+        );
+    }
+
     public void setMsgUnBan(Student student){
         jdbcTemplate.update(
                 "UPDATE Student SET ban_message = ? WHERE id_al = ?",

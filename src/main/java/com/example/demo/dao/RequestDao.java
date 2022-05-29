@@ -37,6 +37,14 @@ public class RequestDao {
                 request.getId_R()
         );
     }
+
+    public void disableWithSkill(int id_s) {
+        jdbcTemplate.update(
+                "UPDATE Request SET active = false WHERE id_s = ?",
+                id_s
+        );
+    }
+
     public void deleteRequest(int id_R) {
         jdbcTemplate.update(
                 "DELETE FROM Request WHERE id_R = ?",
@@ -139,7 +147,7 @@ public class RequestDao {
 
     public List<Request> getMyRequests(Student student) {
         try {
-            return jdbcTemplate.query("SELECT * FROM Request WHERE id_al = ?;",
+            return jdbcTemplate.query("SELECT * FROM Request WHERE id_al = ? and active = true;",
                     new RequestRowMapper(),
                     student.getId_al()
             );

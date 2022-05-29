@@ -1,6 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.CollaborationDao;
+import com.example.demo.dao.OfferDao;
+import com.example.demo.dao.RequestDao;
 import com.example.demo.dao.SkillTypeDao;
+import com.example.demo.model.Collaboration;
+import com.example.demo.model.Offer;
+import com.example.demo.model.Request;
 import com.example.demo.model.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +22,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SkillTypeController {
 
     private SkillTypeDao skillTypeDao;
+    private OfferDao offerDao;
+    private RequestDao requestDao;
+    private CollaborationDao collaborationDao;
 
     @Autowired
     public void setSkillTypeDao(SkillTypeDao skillTypeDao) {
         this.skillTypeDao = skillTypeDao;
+    }
+
+    @Autowired
+    public void setOfferDao(OfferDao offerDao) {
+        this.offerDao = offerDao;
+    }
+
+    @Autowired
+    public void setRequestDao(RequestDao requestDao) {
+        this.requestDao = requestDao;
+    }
+
+    @Autowired
+    public void setCollaborationDao(CollaborationDao collaborationDao) {
+        this.collaborationDao = collaborationDao;
     }
 
     @RequestMapping("/list")
@@ -58,7 +82,9 @@ public class SkillTypeController {
     }
 
     @RequestMapping(value="/delete/{id_S}")
-    public String processDelete(@PathVariable String id_S) {
+    public String processDelete(@PathVariable int id_S) {
+        offerDao.disableWithSkill(id_S);
+        requestDao.disableWithSkill(id_S);
         skillTypeDao.deleteSkilType(id_S);
         return "redirect:../list";
     }

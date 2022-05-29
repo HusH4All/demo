@@ -37,6 +37,14 @@ public class OfferDao {
                 offer.getId_O()
         );
     }
+
+    public void disableWithSkill(int id_s) {
+        jdbcTemplate.update(
+                "UPDATE Offer SET active = false WHERE id_s = ?",
+                id_s
+        );
+    }
+
     public void deleteOffer(int id_O) {
         jdbcTemplate.update(
                 "DELETE FROM Offer WHERE id_O = ?",
@@ -140,7 +148,7 @@ public class OfferDao {
 
     public List<Offer> getMyOffers(Student student) {
         try {
-            return jdbcTemplate.query("SELECT * FROM Offer WHERE id_al = ?;",
+            return jdbcTemplate.query("SELECT * FROM Offer WHERE id_al = ? AND active = true;",
                     new OfferRowMapper(),
                     student.getId_al()
             );
