@@ -54,7 +54,7 @@ public class CollaborationController {
         collaborations.addAll(collaborationDao.getCollaborationFromRequest(user));
 
         for (Collaboration collaboration : collaborations) {
-            if (collaboration != null && !collaboration.pending) {
+            if (collaboration != null && !collaboration.getPending() && collaboration.getState()) {
                 Offer offer = offerDao.getOffer(collaboration.getId_O());
                 Request request = requestDao.getRequest(collaboration.getId_R());
                 StudentsColaborating studentsColaborating = new StudentsColaborating(collaborationDao.getStudent(offer.getId_al()), collaborationDao.getStudent(request.getId_al()), offerDao.getSkill(offer.getId_S()));
